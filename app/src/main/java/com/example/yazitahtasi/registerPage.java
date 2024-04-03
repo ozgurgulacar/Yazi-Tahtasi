@@ -1,23 +1,38 @@
 package com.example.yazitahtasi;
 
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.blogspot.atifsoftwares.circularimageview.CircularImageView;
+import com.example.Classes.UserSingleton;
+import com.github.dhaval2404.imagepicker.ImagePicker;
+
 public class registerPage extends AppCompatActivity {
     private EditText name,surname,mail,number;
     private RadioButton male,female;
+    CircularImageView imageView ;
     AlertDialog.Builder dialog;
+    UserSingleton user = UserSingleton.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +44,7 @@ public class registerPage extends AppCompatActivity {
         number=findViewById(R.id.editNumber);
         male=findViewById(R.id.radioMale);
         female=findViewById(R.id.radioFemale);
+        imageView=findViewById(R.id.btnPhoto);
     }
 
     public void clickContinueRegister(View v){
@@ -69,6 +85,11 @@ public class registerPage extends AppCompatActivity {
 
         //Tüm kontrollerden Geçtiyse Sonraki Sayfaya yönlendirir
         if(canNavigateToRegisterPage2) {
+            user.setSurName(surname.getText().toString());
+            user.setName(name.getText().toString());
+            user.setEmail(mail.getText().toString());
+            user.setNumber(number.getText().toString());
+            user.setMale(male.isChecked()? true:false);
             Intent i = new Intent(registerPage.this, registerPage2.class);
             startActivity(i);
         }
@@ -84,10 +105,27 @@ public class registerPage extends AppCompatActivity {
         alertDialog();
         dialog.create().show();
     }
+
     public void clickAddImageRegister(View v){
+        ImagePicker.with(this)
+                .crop()	    			//Crop image(Optional), Check Customization for more option
+                .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                .start();
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            Uri uri = data.getData();
+            imageView.setImageURI(uri);
+        }
+        else{
+            Toast.makeText(this,"Fotoğraf Seçilmedi",Toast.LENGTH_SHORT).show();
+        }
+    }
 
     private void alertDialog(){
         dialog=new AlertDialog.Builder(registerPage.this);

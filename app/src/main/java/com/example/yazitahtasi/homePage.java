@@ -16,5 +16,6 @@ public class homePage extends AppCompatActivity {
     public void clickMyProfile(View v){
         Intent i =new Intent(homePage.this,myProfilePage.class);
         startActivity(i);
+        finish();
     }
 }

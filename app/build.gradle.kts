@@ -37,6 +37,9 @@ dependencies {
     //Yuvarlak Resim
     implementation("com.github.AtifSayings:CircularImageView:1.0.2")
 
+    //Resim Seçme
+    implementation("com.github.dhaval2404:imagepicker:2.1")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")

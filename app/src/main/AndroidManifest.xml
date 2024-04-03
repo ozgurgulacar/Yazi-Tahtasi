@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+
+
 
     <application
         android:allowBackup="true"
@@ -16,7 +20,7 @@
             android:name=".myProfilePage"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.activity_register_page" />
+                <action android:name="android.intent.action.activity_my_profile_page" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -25,7 +29,7 @@
             android:name=".homePage"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.activity_register_page" />
+                <action android:name="android.intent.action.activity_home_page" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -34,7 +38,7 @@
             android:name=".registerPage2"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.activity_register_page" />
+                <action android:name="android.intent.action.activity_register_page2" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
