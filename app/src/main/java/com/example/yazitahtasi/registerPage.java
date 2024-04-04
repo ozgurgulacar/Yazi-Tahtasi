@@ -83,6 +83,14 @@ public class registerPage extends AppCompatActivity {
             }
         }
 
+        //Fotoğraf Kontrolü
+        if (user.getPhoto()==null){
+            canNavigateToRegisterPage2 = false;
+            t.setText("Lütfen Bir Fotoğraf Seçiniz");
+            t.show();
+        }
+
+
         //Tüm kontrollerden Geçtiyse Sonraki Sayfaya yönlendirir
         if(canNavigateToRegisterPage2) {
             user.setSurName(surname.getText().toString());
@@ -121,6 +129,7 @@ public class registerPage extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
             Uri uri = data.getData();
             imageView.setImageURI(uri);
+            user.setPhoto((uri));
         }
         else{
             Toast.makeText(this,"Fotoğraf Seçilmedi",Toast.LENGTH_SHORT).show();

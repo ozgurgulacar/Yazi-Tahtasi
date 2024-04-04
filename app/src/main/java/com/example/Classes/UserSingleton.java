@@ -1,5 +1,7 @@
 package com.example.Classes;
 
+import android.net.Uri;
+
 public class UserSingleton {
     private static UserSingleton user=null;
     private UserSingleton(){}
@@ -16,6 +18,45 @@ public class UserSingleton {
     private String number;
     private String userName;
     private String password;
+    private int numberIFollow;
+    private int numberWhoFollowMe;
+    private Uri photo;
+    private int userId;
+
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int id) {
+        this.userId = id;
+    }
+
+    public Uri getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Uri photo) {
+        this.photo = photo;
+    }
+
+    public int getNumberIFollow() {
+        return numberIFollow;
+    }
+
+    public void setNumberIFollow(int numberIFollow) {
+        this.numberIFollow = numberIFollow;
+    }
+
+    public int getNumberWhoFollowMe() {
+        return numberWhoFollowMe;
+    }
+
+    public void setNumberWhoFollowMe(int numberWhoFollowMe) {
+        this.numberWhoFollowMe = numberWhoFollowMe;
+    }
+
+
 
     public static UserSingleton getUser() {
         return user;

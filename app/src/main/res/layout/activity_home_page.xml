@@ -52,6 +52,7 @@
 
 
     <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:background="#8E74FD"
@@ -72,8 +73,9 @@
                 android:src="@drawable/baseline_account_circle_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:layout_width="30dp"/>
+
+            <TextView android:layout_width="30dp" />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnSearchWord"
                 android:layout_width="80dp"
@@ -84,8 +86,9 @@
                 android:src="@drawable/baseline_add_home_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:layout_width="30dp"/>
+
+            <TextView android:layout_width="30dp" />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnSearchUser"
                 android:layout_width="80dp"
@@ -96,8 +99,9 @@
                 android:src="@drawable/baseline_add_circle_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:layout_width="30dp"/>
+
+            <TextView android:layout_width="30dp" />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnProfile"
                 android:layout_width="80dp"
