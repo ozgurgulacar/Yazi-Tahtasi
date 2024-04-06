@@ -2,6 +2,7 @@ package com.example.Classes;
 
 public class DataBaseConstants {
 
+
     //DataBase Oluşturmak için Gerekli Olanlar
     public static final String DATABASE_NAME = "MyDB";
     public static final int DATABASE_VERSION = 1;
@@ -53,5 +54,17 @@ public class DataBaseConstants {
                     + ")";
 
 
+
+
+
+    public static final String ArticleUser_articleuser_id="ArticleUserId";
+    public static final String ArticleUser_article_id="ArticleId";
+    public static final String ArticleUser_user_id="UserId";
+    public static final String CREATE_TABLE_ArticleUser =
+            "CREATE TABLE ArticleUser("
+                    +ArticleUser_articleuser_id+" INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    +ArticleUser_article_id+" INTEGER,"
+                    +ArticleUser_user_id+" INTEGER,"
+                    + ")";
 
 }

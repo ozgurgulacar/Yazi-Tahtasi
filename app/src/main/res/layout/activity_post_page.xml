@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".postPage">
+
+    <EditText
+        android:id="@+id/txtPostTitlePost"
+        android:layout_width="350dp"
+        android:layout_height="120dp"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="38dp"
+        android:background="@drawable/cerceve_multilinetext"
+        android:gravity="center|top"
+        android:inputType="textMultiLine"
+        android:padding="20dp"
+        android:text="Deneme Başlığıdır. Bu Konuda Bir yazı Yazacam Demek İstiyorum."
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtPostDetailPost"
+        android:layout_width="363dp"
+        android:layout_height="403dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/cerceve_multilinetext"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:padding="20dp"
+        android:text=" İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim.DENEME YAZISIDIR. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim."
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtPostTitlePost" />
+
+    <Button
+        android:id="@+id/btnCancelPost"
+        android:layout_width="133dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginBottom="47dp"
+        android:onClick="clickCancelOrDeletePost"
+        android:text="SİL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnSharePost"
+        android:layout_width="133dp"
+        android:layout_height="63dp"
+        android:layout_marginEnd="46dp"
+        android:layout_marginBottom="47dp"
+        android:onClick="clickShareOrUpdatePost"
+        android:text="Güncelle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

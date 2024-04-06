@@ -50,6 +50,16 @@
         </TableRow>
     </TableLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnNewPostHome"
+        android:layout_width="80dp"
+        android:layout_height="58dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="34dp"
+        android:onClick="clickNewPostHome"
+        android:src="@drawable/baseline_add_circle_24"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TableLayout
         android:id="@+id/tableLayout"
@@ -63,13 +73,13 @@
         <TableRow>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnhomePage"
+                android:id="@+id/btnhomePageHome"
                 android:layout_width="80dp"
                 android:layout_height="58dp"
 
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:onClick="clickBackRegister1"
+                android:onClick="clickHomePageHome"
                 android:src="@drawable/baseline_account_circle_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -77,12 +87,12 @@
             <TextView android:layout_width="30dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnSearchWord"
+                android:id="@+id/btnSearchWordHome"
                 android:layout_width="80dp"
                 android:layout_height="58dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:onClick="clickBackRegister1"
+                android:onClick="clickSearchWordHome"
                 android:src="@drawable/baseline_add_home_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -90,12 +100,12 @@
             <TextView android:layout_width="30dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnSearchUser"
+                android:id="@+id/btnSearchUserHome"
                 android:layout_width="80dp"
                 android:layout_height="58dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:onClick="clickBackRegister1"
+                android:onClick="clickSearchUserHome"
                 android:src="@drawable/baseline_add_circle_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -103,12 +113,12 @@
             <TextView android:layout_width="30dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnProfile"
+                android:id="@+id/btnProfileHome"
                 android:layout_width="80dp"
                 android:layout_height="58dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:onClick="clickMyProfile"
+                android:onClick="clickMyProfileHome"
                 android:src="@drawable/baseline_add_circle_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -116,5 +126,4 @@
 
 
     </TableLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
