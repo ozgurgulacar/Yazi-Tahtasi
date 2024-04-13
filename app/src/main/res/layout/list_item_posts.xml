@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_toEndOf="@+id/linearLayout"
+    android:orientation="vertical"
+    android:background="#DAC5B9"
+    android:layout_marginTop="2dp">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+            <com.blogspot.atifsoftwares.circularimageview.CircularImageView
+                android:id="@+id/btnPhotoPosts_list_item"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/add_photo" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp">
+                <TextView
+                    android:id="@+id/txtHeaderPosts_list_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="Bu Bir Deneme Yazısıdır. Bu Başlık Deneme İçin Yazıldı."
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="#650202"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="5dp">
+                <TextView
+                    android:id="@+id/txtContentPosts_list_item"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#0A015E"
+                    android:layout_marginTop="5dp"
+                    android:text="Bu bir Deneme İçeriğidir Deneme Tam olarak Byöle böyleBöyle Olacak. ajsdjahdsajasdhj jsad asdhjas asgdh dasjdsa gadshj"
+                    android:textSize="12sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="1dp"
+        android:background="#000000" />
+
+
+
+
+
+
+</LinearLayout>

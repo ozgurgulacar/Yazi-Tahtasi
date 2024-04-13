@@ -14,7 +14,7 @@ public class homePage extends AppCompatActivity {
         setContentView(R.layout.activity_home_page);
 
     }
-    public void clickMyProfile(View v){
+    public void clickMyProfileHome(View v){
         Intent i =new Intent(homePage.this,myProfilePage.class);
         startActivity(i);
         finish();

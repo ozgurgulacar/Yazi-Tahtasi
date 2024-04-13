@@ -73,6 +73,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginBottom="8dp"
         android:text="YAZILARIM"
+        android:onClick="clickMyWordsMyProfil"
         android:textColor="@color/black"
         android:textSize="15dp"
         android:textStyle="bold"
@@ -138,6 +139,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btnPhotoMyProfil" />
 
     <TableLayout
+        android:id="@+id/tableLayout3"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:background="#8E74FD"
@@ -158,8 +160,9 @@
                 android:src="@drawable/baseline_account_circle_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:layout_width="30dp"/>
+
+            <TextView android:layout_width="30dp" />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnSearchWord"
                 android:layout_width="80dp"
@@ -170,8 +173,9 @@
                 android:src="@drawable/baseline_add_home_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:layout_width="30dp"/>
+
+            <TextView android:layout_width="30dp" />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnSearchUser"
                 android:layout_width="80dp"
@@ -182,8 +186,9 @@
                 android:src="@drawable/baseline_add_circle_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <TextView
-                android:layout_width="30dp"/>
+
+            <TextView android:layout_width="30dp" />
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnProfile"
                 android:layout_width="80dp"
@@ -198,5 +203,16 @@
 
 
     </TableLayout>
+
+    <ListView
+        android:layout_width="409dp"
+        android:layout_height="313dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        android:id="@+id/listViewMyProfilePage"
+        android:layout_marginBottom="1dp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

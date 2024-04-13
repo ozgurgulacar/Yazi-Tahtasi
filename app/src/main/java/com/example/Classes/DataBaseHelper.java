@@ -11,6 +11,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -77,10 +78,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             values.put(DataBaseConstants.Article_Number_Saves,0);
             values.put(DataBaseConstants.Article_Title,article.getArticleTitle());
             values.put(DataBaseConstants.Article_Content,article.getArticleContent());
-            values.put(DataBaseConstants.Article_Date_Save, article.getDateSave().getTime());
+            //values.put(DataBaseConstants.Article_Date_Save, article.getDateSave().getTime());
 
             long id=db.insert("Articles",null,values);
-            db.close();
 
 
             //ArticleUser Tablosuna Ekleme Yapar
@@ -96,6 +96,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
             return true;
         }catch (Exception e){
+            Log.d("HataArticle",e.toString());
+            Log.d("HataArticles",e.getMessage());
             return false;
         }
     }
@@ -133,7 +135,66 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean isLoginSuccesful(String userName,String password){
+    public List<Article> getMyPosts(){
+        List<Article> articles = new ArrayList<>();
+        try{
+
+
+            SQLiteDatabase db = this.getReadableDatabase();
+
+            String query = DataBaseConstants.ArticleUser_user_id+ "= ?";
+            String queryValue[] = {String.valueOf(UserSingleton.getInstance().getUserId())};
+            String returns[] = {DataBaseConstants.ArticleUser_article_id};
+
+            Cursor cursor = db.query("ArticleUser",returns,query,queryValue,null,null,null);
+
+            List<String> id_Articles = new ArrayList<>();
+            if (cursor.moveToFirst()){
+                do {
+                    id_Articles.add(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.ArticleUser_article_id)));
+                }while (cursor.moveToNext());
+                //Buraya Kadar Yazılarımızın İDLERİNİ aldık. Artık Bu İDlerden Yazıları bulup yazıları geri döndürmemiz gerekiyor.
+                query = DataBaseConstants.Article_Id+ "= ?";
+                String[] queryValues = new String[id_Articles.size()];
+                for (int i = 0; i < id_Articles.size(); i++) {
+                    queryValues[i] = id_Articles.get(i);
+                }
+                String returnvalues[] = {DataBaseConstants.Article_Id,DataBaseConstants.Article_Title,DataBaseConstants.Article_Content};
+                for (int i =0;i<id_Articles.size();i++){
+                    String nowQuery[]={queryValues[i]};
+                    Cursor cursor2 = db.query("Articles",returnvalues,query,nowQuery,null,null,null);
+                    if (cursor2.moveToFirst()){
+                        do {
+                            Article article = new Article();
+                            article.setArticleId(cursor2.getInt(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Id)));
+                            article.setArticleTitle(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Title)));
+                            article.setArticleContent(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Content)));
+                            //String dateString = cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Date_Save));
+                            //article.setDateSave(new Date(dateString));
+                            articles.add(article);
+                        }while (cursor2.moveToNext());
+                    }
+                }
+
+            }
+            else{
+                Article article = new Article();
+                article.setArticleTitle("KAYIT BULUNAMADI");
+                articles.add(article);
+            }
+
+
+            return articles;
+        }catch (Exception e){
+            Log.d("HataGetArticles",e.toString());
+            Log.d("HataaGetArticles",e.getMessage());
+            return articles;
+        }
+
+    }
+
+
+    public String isLoginSuccesful(String userName,String password){
         try {
             SQLiteDatabase db = getReadableDatabase();
 
@@ -160,17 +221,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     user.setNumberIFollow(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Number_I_Follow));
                     user.setNumberWhoFollowMe(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Number_Who_Follow_Me));
 
-                    return true;
+                    return "true";
                 }
 
-                return false;
+                return "Parola Hatası";
             }
             cursor.close();
         }catch (Exception e) {
             Log.d("Hata",e.toString());
             Log.d("Hataa",e.getMessage());
-            return false;
+            return "Hata Fırlattık";
         }
-        return false;
+        return "Böyle biri yok";
     }
 }

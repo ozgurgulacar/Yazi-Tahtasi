@@ -30,10 +30,21 @@ public class loginPage extends AppCompatActivity {
         if (!userName.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
             //Giriş Başarılı mı kontrolü yapıldı
             //Başarılı ise homePageye yönlendirildi
-            if (db.isLoginSuccesful(userName.getText().toString(), password.getText().toString())) {
+            String deneme=db.isLoginSuccesful(userName.getText().toString(), password.getText().toString());
+            if (deneme.equals("true")) {
                 Intent i = new Intent(loginPage.this, homePage.class);
                 startActivity(i);
                 finish();
+            }
+            if (deneme.equals("Parola Hatası")){
+                Toast t = Toast.makeText(loginPage.this, "Parola", Toast.LENGTH_LONG);
+                t.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                t.show();
+            }
+            if (deneme.equals("Böyle biri yok")){
+                Toast t = Toast.makeText(loginPage.this, "Böyle biri yok", Toast.LENGTH_LONG);
+                t.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+                t.show();
             }
             //Değilse Toast Mesajı verildi
             else {

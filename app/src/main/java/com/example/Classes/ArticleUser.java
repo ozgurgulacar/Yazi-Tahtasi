@@ -9,7 +9,6 @@ public class ArticleUser {
     public int ArticleUserId() {
         return ArticleUserId;
     }
-
     public void ArticleUserId(int ArticleUserId) {
         this.ArticleUserId = ArticleUserId;
     }

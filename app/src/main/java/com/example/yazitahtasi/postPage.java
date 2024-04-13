@@ -30,6 +30,10 @@ public class postPage extends AppCompatActivity {
         btnCancel=findViewById(R.id.btnCancelPost);
         btnShare=findViewById(R.id.btnSharePost);
         db= new DataBaseHelper(this);
+        txtTitle=findViewById(R.id.txtPostTitlePost);
+        txtContent=findViewById(R.id.txtPostDetailPost);
+
+
 
         Intent i = getIntent();
 
@@ -52,27 +56,27 @@ public class postPage extends AppCompatActivity {
 
             //Yeni Bir Post paylaşılacak
             if (referrer.equals("HomePage")) {
-                article.setArticleTitle(txtTitle.getText().toString().trim());
-                article.setArticleContent(txtContent.getText().toString().trim());
+                article.setArticleTitle(txtTitle.getText().toString());
+                article.setArticleContent(txtContent.getText().toString());
                 article.setNumberSaves(0);
-                article.setDateSave(Calendar.getInstance().getTime());
+                //article.setDateSave(Calendar.getInstance().getTime());
 
                 boolean isTrue=db.addArticle(article);
 
                 //Post Paylaşıldıysa
                 if (isTrue){
-                    Toast.makeText(this,"Post Paylaşıldı",Toast.LENGTH_SHORT);
+                    Toast.makeText(this,"Post Paylaşıldı",Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 //Post Paylaşılmadıysa
                 else{
-                    Toast.makeText(this,"Bir Sorun Meydana Geldi",Toast.LENGTH_SHORT);
+                    Toast.makeText(this,"Bir Sorun Meydana Geldi",Toast.LENGTH_SHORT).show();
                 }
             }
         }
         //Başlık Ve İçerik Boş İse
         else{
-            Toast.makeText(this,"Lütfen Başlık Ve İçerik Kısmını Doldurun",Toast.LENGTH_SHORT);
+            Toast.makeText(this,"Lütfen Başlık Ve İçerik Kısmını Doldurun",Toast.LENGTH_SHORT).show();
         }
     }
 }

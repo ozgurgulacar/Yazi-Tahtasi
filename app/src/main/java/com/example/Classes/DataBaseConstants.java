@@ -64,7 +64,7 @@ public class DataBaseConstants {
             "CREATE TABLE ArticleUser("
                     +ArticleUser_articleuser_id+" INTEGER PRIMARY KEY AUTOINCREMENT,"
                     +ArticleUser_article_id+" INTEGER,"
-                    +ArticleUser_user_id+" INTEGER,"
+                    +ArticleUser_user_id+" INTEGER"
                     + ")";
 
 }
