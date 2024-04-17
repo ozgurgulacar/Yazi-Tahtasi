@@ -139,7 +139,7 @@ public class registerPage extends AppCompatActivity {
     private void alertDialog(){
         dialog=new AlertDialog.Builder(registerPage.this);
         dialog.setCancelable(false);
-        dialog.setTitle("???");
+        dialog.setTitle("  ");
         dialog.setMessage("Geri Dönmek İstediğinize Emin Misiniz?");
         dialog.setIcon(R.mipmap.ic_launcher_round);
         dialog.setPositiveButton("EVET",new DialogInterface.OnClickListener(){

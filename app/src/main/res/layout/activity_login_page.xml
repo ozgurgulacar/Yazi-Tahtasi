@@ -52,7 +52,6 @@
         android:background="@drawable/cerceve_edittext"
         android:ems="10"
         android:paddingLeft="10dp"
-        android:text="DENEME"
         app:layout_constraintBottom_toTopOf="@+id/editPassword"
         app:layout_constraintEnd_toEndOf="parent" />
 

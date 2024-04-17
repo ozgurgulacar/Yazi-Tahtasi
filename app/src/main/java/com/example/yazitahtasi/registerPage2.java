@@ -1,7 +1,9 @@
 package com.example.yazitahtasi;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,8 +34,7 @@ public class registerPage2 extends AppCompatActivity {
     }
 
     public void clickRegisterFinal(View v){
-        //Database içerisinde UserName Var mı kontrolü yapılacak.
-        //Kayıt Edilecek
+
 
         user.setUserName(userName.getText().toString());
         user.setPassword(password.getText().toString());
@@ -41,11 +42,22 @@ public class registerPage2 extends AppCompatActivity {
         user.setNumberWhoFollowMe(0);
         String l = dbHelper.addUser(user);
         if (l.equals("-1"))
-            Toast.makeText(this,l,Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Lütfen farklı bir kullanıcı Adı Deneyiniz",Toast.LENGTH_SHORT).show();
         else {
-            Intent i = new Intent(registerPage2.this, loginPage.class);
-            startActivity(i);
-            finish();
+            AlertDialog.Builder dialog=new AlertDialog.Builder(registerPage2.this);
+            dialog.setCancelable(false);
+            dialog.setTitle("  ");
+            dialog.setMessage("Başarılı Bir Şekilde Kayıt Olundu");
+            dialog.setIcon(R.mipmap.ic_launcher_round);
+            dialog.setPositiveButton("Ana Sayfaya Dön",new DialogInterface.OnClickListener(){
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    Intent i = new Intent(registerPage2.this, loginPage.class);
+                    startActivity(i);
+                    finish();
+                }
+            });
+
         }
     }
 }

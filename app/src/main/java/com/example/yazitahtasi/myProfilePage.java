@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.BaseAdapters.AdapterPosts;
 import com.example.Classes.Article;
 import com.example.Classes.DataBaseHelper;
+import com.example.Classes.UserSingleton;
 
 import java.util.List;
 
@@ -18,20 +20,20 @@ public class myProfilePage extends AppCompatActivity {
 
     DataBaseHelper db;
     ListView listView;
-
+    ImageView img;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_profile_page);
-        Log.d("SetSonrası","SetSonrası");
         db = new DataBaseHelper(this);
-        Log.d("DB Sonrası","toString");
         listView = findViewById(R.id.listViewMyProfilePage);
+        img = findViewById(R.id.btnPhotoMyProfil);
+
 
         myPosts();
-
+        myphoto();
     }
 
     public void clickHomePage(View v){
@@ -51,11 +53,18 @@ public class myProfilePage extends AppCompatActivity {
     public void myPosts(){
         try {
             List<Article> articles = db.getMyPosts();
-            AdapterPosts adapterPosts = new AdapterPosts(getApplicationContext(),articles);
-            listView.setAdapter(adapterPosts);
+            if (!articles.get(0).getArticleTitle().equals("KAYIT BULUNAMADI")){
+                AdapterPosts adapterPosts = new AdapterPosts(getApplicationContext(),articles);
+                listView.setAdapter(adapterPosts);
+            }
+
         }catch (Exception e){
             Log.d("HataGetArticlesProfil",e.toString());
             Log.d("HataaGetArticlesProfil",e.getMessage());
         }
+    }
+
+    public void myphoto(){
+        img.setImageURI(UserSingleton.getInstance().getPhoto());
     }
 }

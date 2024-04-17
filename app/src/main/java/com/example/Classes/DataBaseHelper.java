@@ -192,7 +192,38 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
 
     }
+    public String getArticlePhotoUri(int articleId){
+        SQLiteDatabase db = getReadableDatabase();
 
+        String returns[]= {DataBaseConstants.ArticleUser_user_id};
+        String query = DataBaseConstants.ArticleUser_article_id + "= ?";
+        String queryValue[] = {String.valueOf(articleId)};
+        Cursor cursor = db.query("ArticleUser", returns, query, queryValue, null, null, null);
+        int  userId=-1;
+        if (cursor.moveToFirst()){
+            cursor.moveToFirst();
+            userId =  cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.ArticleUser_user_id));
+        }
+
+        String returns2[] = {DataBaseConstants.User_Photo_Uri};
+        String query2 = DataBaseConstants.User_Id + "= ?";
+        String queryValue2[] = {String.valueOf(userId)};
+
+        Cursor cursor2 = db.query("Users", returns2, query2, queryValue2, null, null, null);
+        try{
+            if (cursor2.moveToFirst()){
+                cursor2.moveToFirst();
+                String uri = cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.User_Photo_Uri));
+                db.close();
+                return uri;
+            }
+        }catch (Exception e){
+            Log.d("hataphoto",e.getMessage());
+        }
+
+        db.close();
+        return "Fotoğraf Bulunamadı";
+    }
 
     public String isLoginSuccesful(String userName,String password){
         try {
@@ -228,8 +259,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }
             cursor.close();
         }catch (Exception e) {
-            Log.d("Hata",e.toString());
-            Log.d("Hataa",e.getMessage());
             return "Hata Fırlattık";
         }
         return "Böyle biri yok";

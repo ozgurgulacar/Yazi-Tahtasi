@@ -36,13 +36,13 @@ public class loginPage extends AppCompatActivity {
                 startActivity(i);
                 finish();
             }
-            if (deneme.equals("Parola Hatası")){
-                Toast t = Toast.makeText(loginPage.this, "Parola", Toast.LENGTH_LONG);
+            else if (deneme.equals("Parola Hatası")){
+                Toast t = Toast.makeText(loginPage.this, "Hatalı Parola", Toast.LENGTH_LONG);
                 t.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 t.show();
             }
-            if (deneme.equals("Böyle biri yok")){
-                Toast t = Toast.makeText(loginPage.this, "Böyle biri yok", Toast.LENGTH_LONG);
+            else if (deneme.equals("Böyle biri yok")){
+                Toast t = Toast.makeText(loginPage.this, "HATALI GİRİŞ YAPTINIZ", Toast.LENGTH_LONG);
                 t.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
                 t.show();
             }

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.Classes.Article;
+import com.example.Classes.DataBaseHelper;
 import com.example.Classes.Users;
 import com.example.yazitahtasi.R;
 
@@ -20,11 +21,14 @@ public class AdapterPosts extends BaseAdapter {
     Context context;
     List<Article> articles;
     LayoutInflater inflater;
+    DataBaseHelper db;
+
 
     public AdapterPosts(Context context, List<Article> articles) {
         this.context = context;
         this.articles = articles;
         inflater=LayoutInflater.from(context);
+        db = new DataBaseHelper(context);
     }
 
 
@@ -54,8 +58,17 @@ public class AdapterPosts extends BaseAdapter {
 
         txtHeaderPosts.setText(articles.get(position).getArticleTitle());
         String content = articles.get(position).getArticleContent();
-        txtContentPosts.setText(content.substring(0,150)+"...");
-        //imageView.setImageURI(Uri.parse(String.valueOf(articles.get(position).get)));
+        if (content.length()>160){
+            txtContentPosts.setText(content.substring(0,150)+"...");
+        }
+        else {
+            txtContentPosts.setText(content);
+        }
+        int id = articles.get(position).getArticleId();
+
+        String uri=db.getArticlePhotoUri(id);
+
+        imageView.setImageURI(Uri.parse(uri));
         return convertView;
     }
 }
