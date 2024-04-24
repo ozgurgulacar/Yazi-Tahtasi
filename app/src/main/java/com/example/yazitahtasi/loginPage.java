@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.Classes.DataBaseHelper;
+import com.example.Classes.UserSingleton;
 
 public class loginPage extends AppCompatActivity {
     private EditText userName,password;
@@ -32,6 +34,8 @@ public class loginPage extends AppCompatActivity {
             //Başarılı ise homePageye yönlendirildi
             String deneme=db.isLoginSuccesful(userName.getText().toString(), password.getText().toString());
             if (deneme.equals("true")) {
+                UserSingleton user = UserSingleton.getInstance();
+                Log.d("girisyaparken","IFollow "+user.getNumberIFollow()+" WhoFollow "+ user.getNumberWhoFollowMe());
                 Intent i = new Intent(loginPage.this, homePage.class);
                 startActivity(i);
                 finish();
@@ -63,5 +67,6 @@ public class loginPage extends AppCompatActivity {
     public void clickRegister(View v){
         Intent i = new Intent(loginPage.this, registerPage.class);
         startActivity(i);
+
     }
 }

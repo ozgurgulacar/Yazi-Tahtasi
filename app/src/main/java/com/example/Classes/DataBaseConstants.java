@@ -5,7 +5,7 @@ public class DataBaseConstants {
 
     //DataBase Oluşturmak için Gerekli Olanlar
     public static final String DATABASE_NAME = "MyDB";
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 3;
 
 
 
@@ -14,7 +14,7 @@ public class DataBaseConstants {
     public static final String Article_Title="ArticleTitle";
     public static final String Article_Content="ArticleContent";
     public static final String Article_Number_Saves="NumberSaves";
-    public static final String Article_Date_Save="DateSave";
+    public static final String Article_Is_Update="Updated";
 
     public static final String CREATE_TABLE_Articles =
             "CREATE TABLE Articles("
@@ -22,7 +22,7 @@ public class DataBaseConstants {
                     +Article_Title+" TEXT,"
                     +Article_Content+" TEXT,"
                     +Article_Number_Saves+" INTEGER,"
-                    +Article_Date_Save+" DATETIME DEFAULT CURRENT_TIMESTAMP"
+                    +Article_Is_Update+" INTEGER"
                     + ")";
 
 
@@ -57,6 +57,7 @@ public class DataBaseConstants {
 
 
 
+    public static final String ArticleUser_Date_Save = "DateSave";
     public static final String ArticleUser_articleuser_id="ArticleUserId";
     public static final String ArticleUser_article_id="ArticleId";
     public static final String ArticleUser_user_id="UserId";
@@ -64,6 +65,7 @@ public class DataBaseConstants {
             "CREATE TABLE ArticleUser("
                     +ArticleUser_articleuser_id+" INTEGER PRIMARY KEY AUTOINCREMENT,"
                     +ArticleUser_article_id+" INTEGER,"
+                    +ArticleUser_Date_Save+" INTEGER,"
                     +ArticleUser_user_id+" INTEGER"
                     + ")";
 

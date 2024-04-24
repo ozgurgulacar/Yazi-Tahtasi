@@ -38,12 +38,12 @@
                 android:layout_height="100dp" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnExit"
+                android:id="@+id/btnExitHomePage"
                 android:layout_width="80dp"
                 android:layout_height="58dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:onClick="clickBackRegister1"
+                android:onClick="clickExitHomePage"
                 android:src="@drawable/baseline_add_circle_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -76,11 +76,10 @@
                 android:id="@+id/btnhomePageHome"
                 android:layout_width="80dp"
                 android:layout_height="58dp"
-
+                android:clickable="false"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:onClick="clickHomePageHome"
-                android:src="@drawable/baseline_account_circle_24"
+                android:src="@drawable/logo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -118,8 +117,8 @@
                 android:layout_height="58dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
-                android:onClick="clickMyProfileHome"
-                android:src="@drawable/baseline_add_circle_24"
+                android:onClick="clickMyProfileHomePage"
+                android:src="@drawable/baseline_account_circle_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </TableRow>

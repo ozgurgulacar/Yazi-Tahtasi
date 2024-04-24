@@ -9,20 +9,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.Classes.Users;
+import com.example.Classes.User;
 import com.example.yazitahtasi.R;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
 public class AdapterSearchUser extends BaseAdapter {
 
     Context context;
-    List<Users> users;
+    List<User> users;
     LayoutInflater inflater;
 
-    public AdapterSearchUser(Context context, List<Users> users) {
+    public AdapterSearchUser(Context context, List<User> users) {
         this.context = context;
         this.users = users;
         inflater=LayoutInflater.from(context);

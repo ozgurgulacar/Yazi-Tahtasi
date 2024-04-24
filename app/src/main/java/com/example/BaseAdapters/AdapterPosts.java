@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.example.Classes.Article;
 import com.example.Classes.DataBaseHelper;
-import com.example.Classes.Users;
 import com.example.yazitahtasi.R;
 
 import java.util.List;

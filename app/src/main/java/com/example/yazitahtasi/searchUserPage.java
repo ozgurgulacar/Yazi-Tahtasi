@@ -1,17 +1,24 @@
 package com.example.yazitahtasi;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.BaseAdapters.AdapterSearchUser;
 import com.example.Classes.DataBaseConstants;
 import com.example.Classes.DataBaseHelper;
-import com.example.Classes.Users;
+import com.example.Classes.User;
+import com.example.Classes.UserSingleton;
 
 import java.util.List;
 
@@ -28,6 +35,28 @@ public class searchUserPage extends AppCompatActivity {
         db= new DataBaseHelper(this);
         txt=findViewById(R.id.txtSearchPeople);
         listView=findViewById(R.id.listViewSearchUser);
+
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView text = view.findViewById(R.id.txtUserNameSearchPeopleListItem);
+
+                // String Extra userNameUserPage
+                if (text.getText().toString().equals(UserSingleton.getInstance().getUserName())){
+                    Intent i = new Intent(searchUserPage.this, myProfilePage.class);
+                    startActivity(i);
+                    finish();
+                }
+                else{
+                    Intent i = new Intent(searchUserPage.this, userPage.class);
+                    i.putExtra("userNameUserPage",text.getText().toString());
+                    startActivity(i);
+                }
+            }
+        });
+
+
     }
 
     public void clickSearchUser(View v){
@@ -45,7 +74,7 @@ public class searchUserPage extends AppCompatActivity {
 
         //edit.setText(query.substring(3));
         try {
-            List<Users> users = db.searchPeople(query);
+            List<User> users = db.searchPeople(query);
             AdapterSearchUser adapterSU= new AdapterSearchUser(getApplicationContext(),users);
             listView.setAdapter(adapterSU);
 
@@ -55,4 +84,34 @@ public class searchUserPage extends AppCompatActivity {
 
         }
     }
+
+
+    public void clickExitSearchUser(View v){
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Emin Misiniz");
+        alert.setMessage("Çıkış yapmak istediğinize Emin misiniz?");
+        alert.setPositiveButton("Evet", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(searchUserPage.this, loginPage.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+        alert.setNegativeButton("Hayır", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        alert.create().show();
+    }
+    public void clickBackSearchUser(View v){
+        Intent i = new Intent(this, homePage.class);
+        startActivity(i);
+        finish();
+
+    }
+
 }

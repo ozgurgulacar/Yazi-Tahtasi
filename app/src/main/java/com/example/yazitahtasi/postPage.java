@@ -59,8 +59,7 @@ public class postPage extends AppCompatActivity {
                 article.setArticleTitle(txtTitle.getText().toString());
                 article.setArticleContent(txtContent.getText().toString());
                 article.setNumberSaves(0);
-                //article.setDateSave(Calendar.getInstance().getTime());
-
+                article.setUpdated("0");
                 boolean isTrue=db.addArticle(article);
 
                 //Post Paylaşıldıysa

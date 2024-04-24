@@ -4,6 +4,21 @@ public class ArticleUser {
     private int articleId;
     private int userId;
     private int ArticleUserId;
+    private String dateSave;
+
+
+
+
+
+    public String getDateSave() {
+        return dateSave;
+    }
+
+    public void setDateSave(String dateSave) {
+        this.dateSave = dateSave;
+    }
+
+
 
 
     public int ArticleUserId() {

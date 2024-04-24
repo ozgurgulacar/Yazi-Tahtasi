@@ -26,7 +26,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:onClick="clickBackSearchUser"
-                android:src="@drawable/baseline_add_circle_24"
+                android:src="@drawable/baseline_arrow_back_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,7 +49,7 @@
                 android:layout_height="58dp"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
-                android:onClick="clickBackExitSearchUser"
+                android:onClick="clickExitSearchUser"
                 android:src="@drawable/baseline_add_circle_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

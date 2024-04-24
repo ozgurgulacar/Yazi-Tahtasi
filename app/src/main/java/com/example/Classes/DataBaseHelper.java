@@ -11,7 +11,6 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
@@ -20,6 +19,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public DataBaseHelper(@Nullable Context context) {
             super(context, DataBaseConstants.DATABASE_NAME, null, DataBaseConstants.DATABASE_VERSION);
+
     }
 
     @Override
@@ -43,6 +43,42 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
 
 
+    public User getUser(String userName){
+        User user = new User();
+
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            String query = DataBaseConstants.User_Name_Unique+ "= ?";
+            String queryValue[] = {String.valueOf(userName)};
+            String returns[] = {DataBaseConstants.User_Id,DataBaseConstants.User_Name,DataBaseConstants.User_SurName,
+                    DataBaseConstants.User_Photo_Uri,DataBaseConstants.User_Number_Who_Follow_Me,DataBaseConstants.User_Number_I_Follow};
+            Cursor cursor = db.query("Users",returns,query,queryValue,null,null,null);
+            if (cursor.moveToFirst()){
+                cursor.moveToFirst();
+                user.setName(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Name)));
+
+                user.setSurName(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_SurName)));
+
+                user.setUserId(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Id)));
+
+                String uri = (cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Photo_Uri)));
+                user.setPhoto(Uri.parse(uri));
+
+                user.setUserName(userName);
+
+                user.setNumberIFollow(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Number_I_Follow)));
+
+                user.setNumberWhoFollowMe(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Number_Who_Follow_Me)));
+
+            }
+
+        }catch (Exception e){
+            user.setName("HataKodu=1024!");
+        }
+
+
+        return user;
+    }
     public String addUser(UserSingleton user){
         try {
             SQLiteDatabase db = this.getWritableDatabase();
@@ -57,6 +93,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             values.put(DataBaseConstants.User_Number_I_Follow,user.getNumberIFollow());
             values.put(DataBaseConstants.User_Number_Who_Follow_Me,user.getNumberWhoFollowMe());
             values.put(DataBaseConstants.User_Photo_Uri,user.getPhoto().toString());
+            Log.d("kayıtolurken2","IFollow "+user.getNumberIFollow()+" WhoFollow "+ user.getNumberWhoFollowMe());
+
 
             long id = db.insert("Users",null,values);
 
@@ -78,20 +116,21 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             values.put(DataBaseConstants.Article_Number_Saves,0);
             values.put(DataBaseConstants.Article_Title,article.getArticleTitle());
             values.put(DataBaseConstants.Article_Content,article.getArticleContent());
-            //values.put(DataBaseConstants.Article_Date_Save, article.getDateSave().getTime());
+            values.put(DataBaseConstants.Article_Is_Update, article.getUpdated());
 
             long id=db.insert("Articles",null,values);
 
 
             //ArticleUser Tablosuna Ekleme Yapar
             UserSingleton user=UserSingleton.getInstance();
-            SQLiteDatabase db2 = this.getWritableDatabase();
+
             ContentValues values2 = new ContentValues();
 
             values2.put(DataBaseConstants.ArticleUser_article_id,id);
             values2.put(DataBaseConstants.ArticleUser_user_id,user.getUserId());
+            values2.put(DataBaseConstants.ArticleUser_Date_Save,String.valueOf(System.currentTimeMillis()));
 
-            long idArticleUser=db.insert("ArticleUser",null,values2);
+            db.insert("ArticleUser",null,values2);
             db.close();
 
             return true;
@@ -102,15 +141,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public List<Users> searchPeople(String queryValue){
+    public List<User> searchPeople(String queryValue){
         queryValue = queryValue.substring(3);
-        List<Users> users = new ArrayList<>();
+        List<User> users = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         String sorgu="SELECT * from Users where "+queryValue;
         Cursor cursor=db.rawQuery(sorgu,null);
         if (cursor.moveToFirst()){
             do {
-                Users user = new Users();
+                User user = new User();
                 user.setName(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Name)));
                 user.setSurName(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_SurName)));
                 user.setUserName(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Name_Unique)));
@@ -124,7 +163,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }while (cursor.moveToNext());
         }
         else {
-            Users user = new Users();
+            User user = new User();
             user.setName("Kimseyi Bulamadı");
             users.add(user);
         }
@@ -135,18 +174,19 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public List<Article> getMyPosts(){
+
+
+    public List<Article> getUserPosts(int userId){
         List<Article> articles = new ArrayList<>();
-        try{
-
-
+        try {
             SQLiteDatabase db = this.getReadableDatabase();
 
             String query = DataBaseConstants.ArticleUser_user_id+ "= ?";
-            String queryValue[] = {String.valueOf(UserSingleton.getInstance().getUserId())};
-            String returns[] = {DataBaseConstants.ArticleUser_article_id};
+            String queryValue[] = {String.valueOf(userId)};
+            String returns[] = {DataBaseConstants.ArticleUser_article_id,DataBaseConstants.ArticleUser_Date_Save};
+            String sortOrder = DataBaseConstants.ArticleUser_Date_Save + " DESC";
 
-            Cursor cursor = db.query("ArticleUser",returns,query,queryValue,null,null,null);
+            Cursor cursor = db.query("ArticleUser",returns,query,queryValue,null,null,sortOrder);
 
             List<String> id_Articles = new ArrayList<>();
             if (cursor.moveToFirst()){
@@ -159,9 +199,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 for (int i = 0; i < id_Articles.size(); i++) {
                     queryValues[i] = id_Articles.get(i);
                 }
-                String returnvalues[] = {DataBaseConstants.Article_Id,DataBaseConstants.Article_Title,DataBaseConstants.Article_Content};
+                String returnvalues[] = {DataBaseConstants.Article_Id,DataBaseConstants.Article_Title,DataBaseConstants.Article_Content,DataBaseConstants.Article_Is_Update};
                 for (int i =0;i<id_Articles.size();i++){
                     String nowQuery[]={queryValues[i]};
+
                     Cursor cursor2 = db.query("Articles",returnvalues,query,nowQuery,null,null,null);
                     if (cursor2.moveToFirst()){
                         do {
@@ -169,8 +210,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                             article.setArticleId(cursor2.getInt(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Id)));
                             article.setArticleTitle(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Title)));
                             article.setArticleContent(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Content)));
-                            //String dateString = cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Date_Save));
-                            //article.setDateSave(new Date(dateString));
+                            article.setUpdated(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Is_Update)));
                             articles.add(article);
                         }while (cursor2.moveToNext());
                     }
@@ -182,8 +222,67 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 article.setArticleTitle("KAYIT BULUNAMADI");
                 articles.add(article);
             }
+            cursor.close();
+            return articles;
+        }catch (Exception e){
+            Log.d("HataGetArticles",e.toString());
+            Log.d("HataaGetArticles",e.getMessage());
+            return articles;
+        }
+
+    }
+    public List<Article> getMyPosts(){
+        List<Article> articles = new ArrayList<>();
+        try{
 
 
+            SQLiteDatabase db = this.getReadableDatabase();
+
+            String query = DataBaseConstants.ArticleUser_user_id+ "= ?";
+            String queryValue[] = {String.valueOf(UserSingleton.getInstance().getUserId())};
+            String returns[] = {DataBaseConstants.ArticleUser_article_id,DataBaseConstants.ArticleUser_Date_Save};
+            String sortOrder = DataBaseConstants.ArticleUser_Date_Save + " DESC";
+
+
+            Cursor cursor = db.query("ArticleUser",returns,query,queryValue,null,null,sortOrder);
+
+            List<String> id_Articles = new ArrayList<>();
+            if (cursor.moveToFirst()){
+                do {
+                    id_Articles.add(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.ArticleUser_article_id)));
+                }while (cursor.moveToNext());
+                //Buraya Kadar Yazılarımızın İDLERİNİ aldık. Artık Bu İDlerden Yazıları bulup yazıları geri döndürmemiz gerekiyor.
+                query = DataBaseConstants.Article_Id+ "= ?";
+                String[] queryValues = new String[id_Articles.size()];
+                for (int i = 0; i < id_Articles.size(); i++) {
+                    queryValues[i] = id_Articles.get(i);
+                }
+                String returnvalues[] = {DataBaseConstants.Article_Id,DataBaseConstants.Article_Title,DataBaseConstants.Article_Content,DataBaseConstants.Article_Is_Update};
+                for (int i =0;i<id_Articles.size();i++){
+                    String nowQuery[]={queryValues[i]};
+
+                    Cursor cursor2 = db.query("Articles",returnvalues,query,nowQuery,null,null,null);
+                    if (cursor2.moveToFirst()){
+                        do {
+                            Article article = new Article();
+                            article.setArticleId(cursor2.getInt(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Id)));
+                            article.setArticleTitle(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Title)));
+                            article.setArticleContent(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Content)));
+                            //String dateString = cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Date_Save));
+                            //article.setDateSave(new Date(dateString));
+                            article.setUpdated(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Is_Update)));
+                            articles.add(article);
+                        }while (cursor2.moveToNext());
+                    }
+                }
+
+            }
+            else{
+                Article article = new Article();
+                article.setArticleTitle("KAYIT BULUNAMADI");
+                articles.add(article);
+            }
+            cursor.close();
             return articles;
         }catch (Exception e){
             Log.d("HataGetArticles",e.toString());
@@ -220,7 +319,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }catch (Exception e){
             Log.d("hataphoto",e.getMessage());
         }
-
+        cursor2.close();
         db.close();
         return "Fotoğraf Bulunamadı";
     }
@@ -249,8 +348,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                     user.setSurName(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_SurName)));
                     user.setEmail(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Email)));
                     user.setPhoto(Uri.parse(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Photo_Uri))));
-                    user.setNumberIFollow(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Number_I_Follow));
-                    user.setNumberWhoFollowMe(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Number_Who_Follow_Me));
+                    user.setNumberIFollow(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Number_I_Follow)));
+                    user.setNumberWhoFollowMe(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Number_Who_Follow_Me)));
 
                     return "true";
                 }

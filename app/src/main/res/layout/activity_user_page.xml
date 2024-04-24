@@ -4,15 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".myProfilePage">
+    tools:context=".userPage">
 
     <TableLayout
         android:id="@+id/tableLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="21dp"
         android:background="#8E74FD"
-        app:layout_constraintBottom_toTopOf="@+id/btnPhotoMyProfil"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,12 +19,19 @@
             android:layout_width="100dp"
             android:layout_height="50dp">
 
-            <TextView
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnBackUserPage"
                 android:layout_width="80dp"
-                android:layout_height="100dp" />
+                android:layout_height="58dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="15dp"
+                android:onClick="clickBackUserPage"
+                android:src="@drawable/baseline_arrow_back_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="90dp"
                 android:layout_height="100dp" />
 
             <ImageView
@@ -38,53 +43,45 @@
                 android:layout_width="80dp"
                 android:layout_height="100dp" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnExitMyProfilePage"
-                android:layout_width="80dp"
-                android:layout_height="58dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="15dp"
-                android:onClick="clickExitMyProfilePage"
-                android:src="@drawable/baseline_add_circle_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
         </TableRow>
     </TableLayout>
 
 
     <com.blogspot.atifsoftwares.circularimageview.CircularImageView
-        android:id="@+id/btnPhotoMyProfil"
+        android:id="@+id/btnPhotoUserPage"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="21dp"
-        android:layout_marginBottom="9dp"
-        android:onClick="clickAddImageRegister"
+        android:layout_marginBottom="7dp"
+        android:onClick="clickAddImageRegisterUserPage"
         android:src="@drawable/add_photo"
         app:c_border="true"
         app:c_border_color="@color/black"
         app:c_border_width="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/txtMyNameMyProfile"
+        app:layout_constraintBottom_toTopOf="@+id/txtMyNameUserPage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tableLayout2" />
 
     <TextView
-        android:id="@+id/txtMyNameMyProfile"
+        android:id="@+id/txtMyNameUserPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="9dp"
+        android:layout_marginBottom="4dp"
         android:text="ÖZGÜR GÜLAÇAR"
         android:textSize="18dp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txtMyUserNameUserPage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPhotoMyProfil" />
+        app:layout_constraintTop_toBottomOf="@+id/btnPhotoUserPage" />
 
     <TextView
         android:id="@+id/textViewyazilarimyazisi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="156dp"
+        android:layout_marginStart="157dp"
         android:layout_marginEnd="162dp"
         android:layout_marginBottom="3dp"
         android:text="YAZILARIM"
@@ -95,23 +92,23 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnEditProfileMyProfilePage"
+        android:id="@+id/btnfollowUserPage"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="58dp"
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="32dp"
-        android:onClick="clickEditProfileMyProfilePage"
-        android:text="Profili Düzenle"
+        android:onClick="clickFollowUserPage"
+        android:text="Takip Et/Çıkar"
         android:textColor="@color/black"
         android:textSize="15dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textViewyazilarimyazisi"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/txtMyNameMyProfile" />
+        app:layout_constraintStart_toEndOf="@+id/txtMyNameUserPage" />
 
     <TextView
-        android:id="@+id/txtMyUserNameMyProfile"
+        android:id="@+id/txtMyUserNameUserPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -120,8 +117,7 @@
         android:text="\@OzgurGulacar"
         app:layout_constraintBottom_toTopOf="@+id/view2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtMyNameMyProfile"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/txtMyNameUserPage" />
 
     <View
         android:id="@+id/view2"
@@ -129,85 +125,20 @@
         android:layout_height="3dp"
         android:layout_marginBottom="1dp"
         android:background="#6E6D6D"
-        app:layout_constraintBottom_toTopOf="@+id/listViewMyProfilePage"
+        app:layout_constraintBottom_toTopOf="@+id/listViewUserPage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TableLayout
-        android:id="@+id/tableLayout3"
-        android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:background="#8E74FD"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TableRow>
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnhomePageMyProfilePage"
-                android:layout_width="80dp"
-                android:layout_height="58dp"
-
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:onClick="clickHomePageMyProfilePage"
-                android:src="@drawable/logo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView android:layout_width="30dp" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnSearchWordMyProfilePage"
-                android:layout_width="80dp"
-                android:layout_height="58dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:onClick="clickSearchWordMyProfilePage"
-                android:src="@drawable/baseline_add_home_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView android:layout_width="30dp" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnSearchUserMyProfilePage"
-                android:layout_width="80dp"
-                android:layout_height="58dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:onClick="clickSearchUserMyProfilePage"
-                android:src="@drawable/baseline_add_circle_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView android:layout_width="30dp" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnProfile"
-                android:layout_width="80dp"
-                android:layout_height="58dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:clickable="false"
-                android:src="@drawable/baseline_account_circle_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </TableRow>
-
-
-    </TableLayout>
 
     <ListView
-        android:id="@+id/listViewMyProfilePage"
+        android:id="@+id/listViewUserPage"
         android:layout_width="409dp"
-        android:layout_height="313dp"
+        android:layout_height="410dp"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/tableLayout3"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
@@ -217,12 +148,11 @@
         android:layout_marginStart="64dp"
         android:layout_marginBottom="40dp"
         android:text="Gönderi"
-        app:layout_constraintBottom_toTopOf="@+id/btnEditProfileMyProfilePage"
-        app:layout_constraintEnd_toStartOf="@+id/txtwhofollowtext"
-        app:layout_constraintStart_toEndOf="@+id/btnPhotoMyProfil" />
+        app:layout_constraintBottom_toTopOf="@+id/btnfollowUserPage"
+        app:layout_constraintStart_toEndOf="@+id/btnPhotoUserPage" />
 
     <TextView
-        android:id="@+id/txtIFollowCount"
+        android:id="@+id/txtIFollowCountUserPage"
         android:layout_width="wrap_content"
         android:layout_height="17dp"
         android:layout_marginEnd="31dp"
@@ -234,7 +164,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
-        android:id="@+id/txtPostCount"
+        android:id="@+id/txtPostCountUserPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="77dp"
@@ -242,11 +172,10 @@
         android:text="55"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtpoststext"
-        app:layout_constraintEnd_toStartOf="@+id/txtWhoFollowCount"
-        app:layout_constraintStart_toEndOf="@+id/btnPhotoMyProfil" />
+        app:layout_constraintStart_toEndOf="@+id/btnPhotoUserPage" />
 
     <TextView
-        android:id="@+id/txtWhoFollowCount"
+        android:id="@+id/txtWhoFollowCountUserPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="70dp"
@@ -255,8 +184,8 @@
         android:text="5"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/txtwhofollowtext"
-        app:layout_constraintEnd_toStartOf="@+id/txtIFollowCount"
-        app:layout_constraintStart_toEndOf="@+id/txtPostCount" />
+        app:layout_constraintEnd_toStartOf="@+id/txtIFollowCountUserPage"
+        app:layout_constraintStart_toEndOf="@+id/txtPostCountUserPage" />
 
     <TextView
         android:id="@+id/txtwhofollowtext"
@@ -266,7 +195,7 @@
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="40dp"
         android:text="Takipçi"
-        app:layout_constraintBottom_toTopOf="@+id/btnEditProfileMyProfilePage"
+        app:layout_constraintBottom_toTopOf="@+id/btnfollowUserPage"
         app:layout_constraintEnd_toStartOf="@+id/txtIFollowtext"
         app:layout_constraintStart_toEndOf="@+id/txtpoststext" />
 
@@ -277,7 +206,7 @@
         android:layout_marginEnd="31dp"
         android:layout_marginBottom="40dp"
         android:text="Takip"
-        app:layout_constraintBottom_toTopOf="@+id/btnEditProfileMyProfilePage"
+        app:layout_constraintBottom_toTopOf="@+id/btnfollowUserPage"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

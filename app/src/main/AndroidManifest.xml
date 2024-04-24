@@ -15,6 +15,15 @@
         android:theme="@style/Theme.YaziTahtasi"
         tools:targetApi="31">
         <activity
+            android:name=".userPage"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.activity_user_page" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".postPage"
             android:exported="true"
             android:fitsSystemWindows="true"

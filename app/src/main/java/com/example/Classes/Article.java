@@ -7,7 +7,7 @@ public class Article {
     private String articleTitle;
     private String articleContent;
     private int numberSaves;
-    private Date dateSave;
+    private String updated;
 
 
     public int getArticleId() {
@@ -45,12 +45,12 @@ public class Article {
             this.numberSaves = numberSaves-1;
     }
 
-    public Date getDateSave() {
-        return dateSave;
+    public String getUpdated() {
+        return updated;
     }
 
-    public void setDateSave(Date dateSave) {
-        this.dateSave = dateSave;
+    public void setUpdated(String updated) {
+        this.updated = updated;
     }
 
 

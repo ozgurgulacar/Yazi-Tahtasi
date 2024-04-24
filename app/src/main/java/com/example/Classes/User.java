@@ -2,7 +2,7 @@ package com.example.Classes;
 
 import android.net.Uri;
 
-public class Users {
+public class User {
     private String name;
     private String surName;
     private String email;
