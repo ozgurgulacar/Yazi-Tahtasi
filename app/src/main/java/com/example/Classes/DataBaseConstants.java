@@ -5,7 +5,31 @@ public class DataBaseConstants {
 
     //DataBase Oluşturmak için Gerekli Olanlar
     public static final String DATABASE_NAME = "MyDB";
-    public static final int DATABASE_VERSION = 3;
+    public static final int DATABASE_VERSION = 5;
+
+
+
+
+
+
+
+
+    //Takip Tablosu için gerekli olanlar
+    public static final String Follows_Id="FollowsId";
+    public static final String User_Name_Follower="UserName";
+    public static final String Followed_User_Name="FollowedUserId";
+
+    public static final String CREATE_TABLE_Follows =
+            "CREATE TABLE Follows("
+                    +Follows_Id+" INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    +User_Name_Follower+" TEXT,"
+                    +Followed_User_Name+" TEXT"
+                    + ")";
+
+
+
+
+
 
 
 

@@ -178,4 +178,18 @@
             android:text="Kadın" />
     </RadioGroup>
 
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="15dp"
+        android:text="Kullanım Sözleşmesini Kabul Ediyorum"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/btnContinue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+        app:layout_constraintVertical_bias="0.52" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

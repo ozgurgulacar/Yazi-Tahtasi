@@ -28,6 +28,10 @@ public class loginPage extends AppCompatActivity {
         db=new DataBaseHelper(this);
     }
     public void clickLogin(View v){
+        //Intent intent = new Intent(this, DetailPost.class);
+        //startActivity(intent);
+
+
         //userName ve password EditTextlerinin Boş olup olmadığı kontrol edildi
         if (!userName.getText().toString().isEmpty() && !password.getText().toString().isEmpty()) {
             //Giriş Başarılı mı kontrolü yapıldı

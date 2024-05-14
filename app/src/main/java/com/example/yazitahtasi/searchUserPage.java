@@ -51,6 +51,12 @@ public class searchUserPage extends AppCompatActivity {
                 else{
                     Intent i = new Intent(searchUserPage.this, userPage.class);
                     i.putExtra("userNameUserPage",text.getText().toString());
+
+                    i.putExtra("followId",db.isfollow(
+                            UserSingleton.getInstance().getUserName(),
+                            text.getText().toString())
+                    );
+
                     startActivity(i);
                 }
             }
@@ -58,6 +64,8 @@ public class searchUserPage extends AppCompatActivity {
 
 
     }
+
+
 
     public void clickSearchUser(View v){
         String[] sorgu= txt.getText().toString().trim().split(" ");
@@ -85,7 +93,6 @@ public class searchUserPage extends AppCompatActivity {
         }
     }
 
-
     public void clickExitSearchUser(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Emin Misiniz");
@@ -107,6 +114,7 @@ public class searchUserPage extends AppCompatActivity {
         });
         alert.create().show();
     }
+
     public void clickBackSearchUser(View v){
         Intent i = new Intent(this, homePage.class);
         startActivity(i);

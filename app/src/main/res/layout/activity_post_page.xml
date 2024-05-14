@@ -16,8 +16,8 @@
         android:background="@drawable/cerceve_multilinetext"
         android:gravity="center|top"
         android:inputType="textMultiLine"
-        android:padding="20dp"
-        android:text="Deneme Başlığıdır. Bu Konuda Bir yazı Yazacam Demek İstiyorum."
+        android:padding="30dp"
+        android:text="Deneme Başlığıdır."
         android:textSize="23sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,8 +34,10 @@
         android:ems="10"
         android:gravity="start|top"
         android:inputType="textMultiLine"
-        android:padding="20dp"
-        android:text=" İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim.DENEME YAZISIDIR. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim. İçerik tam olarak bu kısımda yer alacaktır. Göz yoruyor mu diye kontrol etmek istedim."
+        android:padding="30dp"
+        android:text="Java, Sun Microsystems mühendislerinden James Gosling tarafından geliştirilmeye başlanmış açık kaynak kodlu, nesneye yönelik, platform bağımsız, yüksek verimli, çok işlevli, yüksek seviye, hem yorumlanan hem de derlenen bir dildir.[1]
+
+Java, Sun Microsystems'den James Gosling tarafından geliştirilen bir programlama dilidir ve 1995 yılında Sun Microsystems'in çekirdek bileşeni olarak piyasaya sürülmüştür. Bu dil C ve C++'dan birçok sözdizim türetmesine rağmen bu türevler daha basit nesne modeli ve daha az düşük seviye olanaklar içerir. Java uygulamaları bilgisayar mimarisine bağlı olmadan herhangi bir Java Sanal Makinesi (Java Virtual Machine - JVM) üzerinde çalışabilen tipik bytecode'dur (sınıf dosyası)."
         android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"

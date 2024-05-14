@@ -49,10 +49,11 @@ public class AdapterPosts extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.list_item_posts,null);
-        TextView txtHeaderPosts,txtContentPosts;
+        TextView txtHeaderPosts,txtContentPosts,txtPostId;
 
         txtHeaderPosts=convertView.findViewById(R.id.txtHeaderPosts_list_item);
         txtContentPosts=convertView.findViewById(R.id.txtContentPosts_list_item);
+
         ImageView imageView=convertView.findViewById(R.id.btnPhotoPosts_list_item);
 
         txtHeaderPosts.setText(articles.get(position).getArticleTitle());

@@ -27,6 +27,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(DataBaseConstants.CREATE_TABLE_Articles);
         db.execSQL(DataBaseConstants.CREATE_TABLE_Users);
         db.execSQL(DataBaseConstants.CREATE_TABLE_ArticleUser);
+        db.execSQL(DataBaseConstants.CREATE_TABLE_Follows);
     }
 
 
@@ -35,6 +36,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Articles");
         db.execSQL("DROP TABLE IF EXISTS Users");
         db.execSQL("DROP TABLE IF EXISTS ArticleUser");
+        db.execSQL("DROP TABLE IF EXISTS Follows");
 
         onCreate(db);
 
@@ -79,6 +81,54 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         return user;
     }
+
+    public String addFollow(String myUserName,String otherUserName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DataBaseConstants.User_Name_Follower,myUserName);
+        values.put(DataBaseConstants.Followed_User_Name,otherUserName);
+        try{
+            return String.valueOf(db.insert("Follows",null,values));
+        }catch (Exception e){
+            return "-1";
+        }
+
+    }
+
+    public void deleteFollow(String otherUser){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String whereClause = DataBaseConstants.User_Name_Follower +" = ? AND "+ DataBaseConstants.Followed_User_Name +" = ?";
+        String[] whereArgs = {UserSingleton.getInstance().getUserName(),otherUser};
+
+        db.delete("Follows",whereClause,whereArgs);
+    }
+
+    public void updateOtherUserFollow(String newValue,String otherUserName){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DataBaseConstants.User_Number_Who_Follow_Me,Integer.parseInt(newValue));
+
+        String whereClause = DataBaseConstants.User_Name_Unique +" = ?";
+        String[] whereArgs = {otherUserName};
+
+        int rowsUpdated = db.update("Users",values,whereClause,whereArgs);
+
+    }
+
+    public void updateCurrentUserFollow(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DataBaseConstants.User_Number_I_Follow,UserSingleton.getInstance().getNumberIFollow());
+
+        String whereClause = DataBaseConstants.User_Name_Unique +" = ?"; //
+        String[] whereArgs = {UserSingleton.getInstance().getUserName()}; //
+
+        int rowsUpdated = db.update("Users",values,whereClause,whereArgs);
+    }
+
     public String addUser(UserSingleton user){
         try {
             SQLiteDatabase db = this.getWritableDatabase();
@@ -93,8 +143,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             values.put(DataBaseConstants.User_Number_I_Follow,user.getNumberIFollow());
             values.put(DataBaseConstants.User_Number_Who_Follow_Me,user.getNumberWhoFollowMe());
             values.put(DataBaseConstants.User_Photo_Uri,user.getPhoto().toString());
-            Log.d("kayıtolurken2","IFollow "+user.getNumberIFollow()+" WhoFollow "+ user.getNumberWhoFollowMe());
-
 
             long id = db.insert("Users",null,values);
 
@@ -135,8 +183,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
             return true;
         }catch (Exception e){
-            Log.d("HataArticle",e.toString());
-            Log.d("HataArticles",e.getMessage());
             return false;
         }
     }
@@ -174,7 +220,47 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public Article getPost(String id){
+        Article article = new Article();
 
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String sorgu="SELECT * from Articles where "+DataBaseConstants.Article_Id +"= '"+id+"'";
+
+        try{
+            Cursor cursor2=db.rawQuery(sorgu,null);
+            if (cursor2.moveToFirst()){
+
+                article.setArticleTitle(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Title)));
+                article.setArticleContent(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Content)));
+                article.setUpdated(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Is_Update)));
+                cursor2.close();
+            }
+        }catch (Exception e){
+            Log.d("Hatanerede",e.getMessage());
+            Log.d("Hatanerede",e.toString());
+
+        }
+
+
+
+
+        return article;
+    }
+
+    public String isfollow(String myUserId, String otherUserId){
+        SQLiteDatabase db = getReadableDatabase();
+
+        String returns[]= {DataBaseConstants.Follows_Id};
+        String query = DataBaseConstants.User_Name_Follower + "= ? AND "+DataBaseConstants.Followed_User_Name + "= ?";
+        String queryValue[] = {myUserId,otherUserId};
+
+        Cursor cursor = db.query("Follows",returns,query,queryValue,null,null,null);
+        if (cursor.moveToFirst())
+            return String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.Follows_Id)));
+
+        return "null";
+    }
 
     public List<Article> getUserPosts(int userId){
         List<Article> articles = new ArrayList<>();
@@ -225,12 +311,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             cursor.close();
             return articles;
         }catch (Exception e){
-            Log.d("HataGetArticles",e.toString());
-            Log.d("HataaGetArticles",e.getMessage());
             return articles;
         }
 
     }
+
     public List<Article> getMyPosts(){
         List<Article> articles = new ArrayList<>();
         try{
@@ -291,6 +376,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
 
     }
+
     public String getArticlePhotoUri(int articleId){
         SQLiteDatabase db = getReadableDatabase();
 

@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ public class registerPage extends AppCompatActivity {
     private RadioButton male,female;
     CircularImageView imageView ;
     AlertDialog.Builder dialog;
+    CheckBox checkBox;
     UserSingleton user = UserSingleton.getInstance();
 
     @Override
@@ -45,11 +47,13 @@ public class registerPage extends AppCompatActivity {
         male=findViewById(R.id.radioMale);
         female=findViewById(R.id.radioFemale);
         imageView=findViewById(R.id.btnPhoto);
+        checkBox=findViewById(R.id.checkBox);
     }
 
     public void clickContinueRegister(View v){
         Toast t = Toast.makeText(registerPage.this,"Lütfen Tüm Alanları Doldurunuz",Toast.LENGTH_SHORT);
         t.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL,0,0);
+
         boolean canNavigateToRegisterPage2=true;
 
 
@@ -93,13 +97,19 @@ public class registerPage extends AppCompatActivity {
 
         //Tüm kontrollerden Geçtiyse Sonraki Sayfaya yönlendirir
         if(canNavigateToRegisterPage2) {
-            user.setSurName(surname.getText().toString());
-            user.setName(name.getText().toString());
-            user.setEmail(mail.getText().toString());
-            user.setNumber(number.getText().toString());
-            user.setMale(male.isChecked()? true:false);
-            Intent i = new Intent(registerPage.this, registerPage2.class);
-            startActivity(i);
+            if (checkBox.isChecked()){
+                user.setSurName(surname.getText().toString());
+                user.setName(name.getText().toString());
+                user.setEmail(mail.getText().toString());
+                user.setNumber(number.getText().toString());
+                user.setMale(male.isChecked()? true:false);
+                Intent i = new Intent(registerPage.this, registerPage2.class);
+                startActivity(i);
+            }
+            else {
+                Toast.makeText(this,"Lütfen Onay Veriniz",Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 

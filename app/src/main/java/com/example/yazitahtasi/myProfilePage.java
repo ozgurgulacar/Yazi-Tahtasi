@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import com.example.BaseAdapters.AdapterPosts;
 import com.example.Classes.Article;
 import com.example.Classes.DataBaseHelper;
+import com.example.Classes.User;
 import com.example.Classes.UserSingleton;
 
 import java.util.List;
@@ -22,6 +24,7 @@ import java.util.List;
 public class myProfilePage extends AppCompatActivity {
 
     DataBaseHelper db;
+    List<Article> articles;
     int countPost=0;
     ListView listView;
     ImageView img;
@@ -44,6 +47,22 @@ public class myProfilePage extends AppCompatActivity {
         myPosts();
         myphoto();
         myInformation();
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                UserSingleton user = UserSingleton.getInstance();
+                int articleId=articles.get(position).getArticleId();
+                Intent i = new Intent(myProfilePage.this, DetailPost.class);
+                i.putExtra("articleId",articleId);
+                i.putExtra("userPhoto", String.valueOf(user.getPhoto()));
+                i.putExtra("userName", user.getName() + " " + user.getSurName());
+                i.putExtra("userUniqueName", user.getUserName());
+                i.putExtra("postHeaderDetail", articles.get(position).getArticleTitle());
+                i.putExtra("postContentDetail", articles.get(position).getArticleContent());
+                startActivity(i);
+            }
+        });
     }
 
 
@@ -92,16 +111,20 @@ public class myProfilePage extends AppCompatActivity {
 
     public void myInformation(){
         UserSingleton user= UserSingleton.getInstance();
+        User user2=db.getUser(user.getUserName());
+        user.setNumberWhoFollowMe(user2.getNumberWhoFollowMe());
         txtusername.setText(user.getUserName());
         txtname.setText(user.getName()+" "+user.getSurName());
         txtIFollowCount.setText(String.valueOf(user.getNumberIFollow()));
         txtWhoFollowCount.setText(String.valueOf(user.getNumberWhoFollowMe()));
+
+
     }
 
 
     public void myPosts(){
         try {
-            List<Article> articles = db.getMyPosts();
+            articles = db.getMyPosts();
             if (!articles.get(0).getArticleTitle().equals("KAYIT BULUNAMADI")){
                 AdapterPosts adapterPosts = new AdapterPosts(getApplicationContext(),articles);
                 listView.setAdapter(adapterPosts);
