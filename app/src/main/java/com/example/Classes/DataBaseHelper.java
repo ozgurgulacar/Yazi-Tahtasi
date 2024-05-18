@@ -201,6 +201,36 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int rowsUpdated = db.update("Articles",values,whereClause,whereArgs);
     }
 
+    public void updateArticle(String Id,String content,String title){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DataBaseConstants.Article_Title,title);
+        values.put(DataBaseConstants.Article_Content,content);
+
+        String whereClause = DataBaseConstants.Article_Id +" = ?"; //
+        String[] whereArgs = {String.valueOf(Id)}; //
+
+        int rowsUpdated = db.update("Articles",values,whereClause,whereArgs);
+    }
+
+    public void deleteArticle(String Id){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String whereClause = DataBaseConstants.Article_Id +" = ?";
+        String[] whereArgs = {Id};
+        db.delete("Articles",whereClause,whereArgs);
+
+        whereClause=DataBaseConstants.Post_Id +" = ?";
+        whereArgs[0] = Id;
+        db.delete("Ratings",whereClause,whereArgs);
+
+        whereClause=DataBaseConstants.ArticleUser_article_id +" = ?";
+        whereArgs[0] = Id;
+        db.delete("ArticleUser",whereClause,whereArgs);
+
+    }
+
     public void addRating(String userName,String userNameRating,String postId,String score){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

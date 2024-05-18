@@ -17,9 +17,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class postPage extends AppCompatActivity {
-    Button btnCancel,btnShare;
-    EditText txtTitle,txtContent;
-    String referrer;
+    Button btnCancel, btnShare;
+    EditText txtTitle, txtContent;
+    String referrer,Id="";
     Article article;
     DataBaseHelper db;
 
@@ -27,32 +27,37 @@ public class postPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_page);
-        btnCancel=findViewById(R.id.btnCancelPost);
-        btnShare=findViewById(R.id.btnSharePost);
-        db= new DataBaseHelper(this);
-        txtTitle=findViewById(R.id.txtPostTitlePost);
-        txtContent=findViewById(R.id.txtPostDetailPost);
-
+        btnCancel = findViewById(R.id.btnCancelPost);
+        btnShare = findViewById(R.id.btnSharePost);
+        db = new DataBaseHelper(this);
+        txtTitle = findViewById(R.id.txtPostTitlePost);
+        txtContent = findViewById(R.id.txtPostDetailPost);
 
 
         Intent i = getIntent();
 
 
-        referrer=i.getStringExtra("referrer");
-        if (referrer.equals("HomePage")){
+        referrer = i.getStringExtra("referrer");
+        if (referrer.equals("HomePage")) {
             btnCancel.setText("İptal Et");
             btnShare.setText("Paylaş");
-            article=new Article();
-        }
-        else if(referrer.equals("DetailsMyPosts")){
-            btnCancel.setText("SİL");
+            article = new Article();
+        } else if (referrer.equals("DetailsMyPosts")) {
+            btnCancel.setText("İptal Et");
             btnShare.setText("Güncelle");
+            txtTitle.setText(i.getStringExtra("Title"));
+            txtContent.setText(i.getStringExtra("Content"));
+            Id=i.getStringExtra("Id");
             //article Nesnesine Referans Atacanak ve Yazı İçerikleri Eklenecek
         }
     }
+
+    public void clickCancelOrDeletePost(View v){
+        finish();
+    }
     public void clickShareOrUpdatePost(View v) {
         //Başlık Ve İçerik Boş Değilse
-        if (!txtContent.getText().toString().isEmpty() && !txtTitle.getText().toString().isEmpty()){
+        if (!txtContent.getText().toString().isEmpty() && !txtTitle.getText().toString().isEmpty()) {
 
             //Yeni Bir Post paylaşılacak
             if (referrer.equals("HomePage")) {
@@ -60,22 +65,28 @@ public class postPage extends AppCompatActivity {
                 article.setArticleContent(txtContent.getText().toString());
                 article.setNumberOfScores(0);
                 article.setAverageScore("0");
-                boolean isTrue=db.addArticle(article);
+                boolean isTrue = db.addArticle(article);
 
                 //Post Paylaşıldıysa
-                if (isTrue){
-                    Toast.makeText(this,"Post Paylaşıldı",Toast.LENGTH_SHORT).show();
+                if (isTrue) {
+                    Toast.makeText(this, "Post Paylaşıldı", Toast.LENGTH_SHORT).show();
                     finish();
                 }
                 //Post Paylaşılmadıysa
-                else{
-                    Toast.makeText(this,"Bir Sorun Meydana Geldi",Toast.LENGTH_SHORT).show();
+                else {
+                    Toast.makeText(this, "Bir Sorun Meydana Geldi", Toast.LENGTH_SHORT).show();
                 }
+            }
+            //Post Düzenlenecekse
+            else{
+                db.updateArticle(Id,txtContent.getText().toString(),txtTitle.getText().toString());
+                Toast.makeText(postPage.this,"Yazınız Başarıyla Güncellendi",Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
         //Başlık Ve İçerik Boş İse
-        else{
-            Toast.makeText(this,"Lütfen Başlık Ve İçerik Kısmını Doldurun",Toast.LENGTH_SHORT).show();
+        else {
+
         }
     }
 }

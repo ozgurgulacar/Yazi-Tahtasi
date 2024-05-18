@@ -100,7 +100,7 @@ public class DetailPost extends AppCompatActivity {
 
     public void clickScore(View view) {
         String rated = db.getAmIScored(articleId);
-        if (txtUserName.getText().toString().equals(UserSingleton.getInstance().getUserName())) {
+        if (userName.equals(UserSingleton.getInstance().getUserName())) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("Oylama Başarısız");
             builder.setMessage("Kendi Yazınızı Oylayamazsınız");

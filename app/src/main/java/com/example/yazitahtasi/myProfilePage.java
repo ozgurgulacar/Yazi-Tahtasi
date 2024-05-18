@@ -1,5 +1,6 @@
 package com.example.yazitahtasi;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +8,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -25,10 +30,18 @@ public class myProfilePage extends AppCompatActivity {
 
     DataBaseHelper db;
     List<Article> articles;
-    int countPost=0;
+    int which;
     ListView listView;
     ImageView img;
     TextView txtWhoFollowCount,txtIFollowCount,txtPostsCount,txtname,txtusername;
+
+
+    @Override
+    protected void onRestart() {
+        myPosts();
+        super.onRestart();
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +61,15 @@ public class myProfilePage extends AppCompatActivity {
         myphoto();
         myInformation();
 
+        registerForContextMenu(listView);
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                which=position;
+                return false;
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -72,7 +94,33 @@ public class myProfilePage extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inf = getMenuInflater();
+        inf.inflate(R.menu.menumyprofile,menu);
 
+        menu.setHeaderTitle("İşleminizi Seçin");
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId()==R.id.itemDelete){
+            db.deleteArticle(String.valueOf(articles.get(which).getArticleId()));
+            myPosts();
+
+        } else if (item.getItemId()==R.id.itemEdit) {
+            Intent i = new Intent(myProfilePage.this,postPage.class);
+            i.putExtra("Title",articles.get(which).getArticleTitle());
+            i.putExtra("Content",articles.get(which).getArticleContent());
+            i.putExtra("Id",String.valueOf(articles.get(which).getArticleId()));
+            i.putExtra("referrer","DetailsMyPosts");
+            startActivity(i);
+        }else{
+            return false;
+        }
+        return true;
+    }
 
     public void clickHomePageMyProfilePage(View v){
         Intent i =new Intent(myProfilePage.this,homePage.class);
