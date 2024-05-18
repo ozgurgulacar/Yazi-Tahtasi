@@ -58,8 +58,8 @@ public class postPage extends AppCompatActivity {
             if (referrer.equals("HomePage")) {
                 article.setArticleTitle(txtTitle.getText().toString());
                 article.setArticleContent(txtContent.getText().toString());
-                article.setNumberSaves(0);
-                article.setUpdated("0");
+                article.setNumberOfScores(0);
+                article.setAverageScore("0");
                 boolean isTrue=db.addArticle(article);
 
                 //Post Paylaşıldıysa

@@ -28,6 +28,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL(DataBaseConstants.CREATE_TABLE_Users);
         db.execSQL(DataBaseConstants.CREATE_TABLE_ArticleUser);
         db.execSQL(DataBaseConstants.CREATE_TABLE_Follows);
+        db.execSQL(DataBaseConstants.CREATE_TABLE_Ratings);
     }
 
 
@@ -37,6 +38,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS Users");
         db.execSQL("DROP TABLE IF EXISTS ArticleUser");
         db.execSQL("DROP TABLE IF EXISTS Follows");
+        db.execSQL("DROP TABLE IF EXISTS Ratings");
 
         onCreate(db);
 
@@ -161,10 +163,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues values = new ContentValues();
 
-            values.put(DataBaseConstants.Article_Number_Saves,0);
+            values.put(DataBaseConstants.Article_Number_Scores,0);
             values.put(DataBaseConstants.Article_Title,article.getArticleTitle());
             values.put(DataBaseConstants.Article_Content,article.getArticleContent());
-            values.put(DataBaseConstants.Article_Is_Update, article.getUpdated());
+            values.put(DataBaseConstants.Article_Average_Scores, "0");
 
             long id=db.insert("Articles",null,values);
 
@@ -185,6 +187,49 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }catch (Exception e){
             return false;
         }
+    }
+    public void updateRating(Article article){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(DataBaseConstants.Article_Number_Scores,article.getNumberOfScores());
+        values.put(DataBaseConstants.Article_Average_Scores,article.getAverageScore());
+
+        String whereClause = DataBaseConstants.Article_Id +" = ?"; //
+        String[] whereArgs = {String.valueOf(article.getArticleId())}; //
+
+        int rowsUpdated = db.update("Articles",values,whereClause,whereArgs);
+    }
+
+    public void addRating(String userName,String userNameRating,String postId,String score){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+
+        values.put(DataBaseConstants.User_Name_Post,userName);
+        values.put(DataBaseConstants.User_Name_Rating,userNameRating);
+        values.put(DataBaseConstants.Score_Post, score);
+        values.put(DataBaseConstants.Post_Id, postId);
+
+        long id=db.insert("Ratings",null,values);
+    }
+
+    public String getAmIScored(String postId){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = DataBaseConstants.User_Name_Rating+ "= ? AND "+DataBaseConstants.Post_Id +"= ?";
+        String queryValue[] = {String.valueOf(UserSingleton.getInstance().getUserName()),postId};
+        String returns[] = {DataBaseConstants.Score_Post};
+
+        Cursor cursor = db.query("Ratings",returns,query,queryValue,null,null,null);
+
+        String donus="Puanlanmadı";
+
+        if (cursor.moveToFirst()) {
+            donus=cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.Score_Post));
+        }
+        return donus;
+
     }
 
     public List<User> searchPeople(String queryValue){
@@ -218,34 +263,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         return users;
 
-    }
-
-    public Article getPost(String id){
-        Article article = new Article();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String sorgu="SELECT * from Articles where "+DataBaseConstants.Article_Id +"= '"+id+"'";
-
-        try{
-            Cursor cursor2=db.rawQuery(sorgu,null);
-            if (cursor2.moveToFirst()){
-
-                article.setArticleTitle(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Title)));
-                article.setArticleContent(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Content)));
-                article.setUpdated(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Is_Update)));
-                cursor2.close();
-            }
-        }catch (Exception e){
-            Log.d("Hatanerede",e.getMessage());
-            Log.d("Hatanerede",e.toString());
-
-        }
-
-
-
-
-        return article;
     }
 
     public String isfollow(String myUserId, String otherUserId){
@@ -285,7 +302,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 for (int i = 0; i < id_Articles.size(); i++) {
                     queryValues[i] = id_Articles.get(i);
                 }
-                String returnvalues[] = {DataBaseConstants.Article_Id,DataBaseConstants.Article_Title,DataBaseConstants.Article_Content,DataBaseConstants.Article_Is_Update};
+                String returnvalues[] = {DataBaseConstants.Article_Id,DataBaseConstants.Article_Title,DataBaseConstants.Article_Content,DataBaseConstants.Article_Average_Scores,DataBaseConstants.Article_Number_Scores};
                 for (int i =0;i<id_Articles.size();i++){
                     String nowQuery[]={queryValues[i]};
 
@@ -296,7 +313,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                             article.setArticleId(cursor2.getInt(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Id)));
                             article.setArticleTitle(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Title)));
                             article.setArticleContent(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Content)));
-                            article.setUpdated(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Is_Update)));
+                            article.setAverageScore(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Average_Scores)));
+                            Log.d("TAG", "getUserPosts: "+cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Average_Scores)));
+                            article.setNumberOfScores(cursor2.getInt(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Number_Scores)));
                             articles.add(article);
                         }while (cursor2.moveToNext());
                     }
@@ -342,7 +361,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 for (int i = 0; i < id_Articles.size(); i++) {
                     queryValues[i] = id_Articles.get(i);
                 }
-                String returnvalues[] = {DataBaseConstants.Article_Id,DataBaseConstants.Article_Title,DataBaseConstants.Article_Content,DataBaseConstants.Article_Is_Update};
+                String returnvalues[] = {DataBaseConstants.Article_Id,DataBaseConstants.Article_Title,DataBaseConstants.Article_Content,DataBaseConstants.Article_Average_Scores,DataBaseConstants.Article_Number_Scores};
                 for (int i =0;i<id_Articles.size();i++){
                     String nowQuery[]={queryValues[i]};
 
@@ -353,9 +372,8 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                             article.setArticleId(cursor2.getInt(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Id)));
                             article.setArticleTitle(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Title)));
                             article.setArticleContent(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Content)));
-                            //String dateString = cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Date_Save));
-                            //article.setDateSave(new Date(dateString));
-                            article.setUpdated(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Is_Update)));
+                            article.setAverageScore(cursor2.getString(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Average_Scores)));
+                            article.setNumberOfScores(cursor2.getInt(cursor2.getColumnIndexOrThrow(DataBaseConstants.Article_Number_Scores)));
                             articles.add(article);
                         }while (cursor2.moveToNext());
                     }

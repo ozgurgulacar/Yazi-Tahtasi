@@ -67,14 +67,20 @@ public class userPage extends AppCompatActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int articleId=articles.get(position).getArticleId();
+                String articleId=String.valueOf(articles.get(position).getArticleId());
+
                 Intent i = new Intent(userPage.this, DetailPost.class);
-                i.putExtra("articleId",articleId);
+
                 i.putExtra("userPhoto", String.valueOf(user.getPhoto()));
                 i.putExtra("userName", user.getName() + " " + user.getSurName());
                 i.putExtra("userUniqueName", user.getUserName());
+
                 i.putExtra("postHeaderDetail", articles.get(position).getArticleTitle());
                 i.putExtra("postContentDetail", articles.get(position).getArticleContent());
+                i.putExtra("postAverageScore",articles.get(position).getAverageScore());
+                i.putExtra("postNumberOfScore",String.valueOf(articles.get(position).getNumberOfScores()));
+                i.putExtra("articleId",articleId);
+
                 startActivity(i);
 
             }
@@ -146,6 +152,7 @@ public class userPage extends AppCompatActivity {
 
     private void getPostsUser() {
         articles = db.getUserPosts(userId);
+        Log.d("TAGAMK", "getPostsUser: " +articles.get(0).getAverageScore());
         if (!articles.get(0).getArticleTitle().equals("KAYIT BULUNAMADI")) {
             AdapterPosts adapterPosts = new AdapterPosts(getApplicationContext(), articles);
             listView.setAdapter(adapterPosts);

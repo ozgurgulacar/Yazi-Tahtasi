@@ -42,8 +42,14 @@
                 android:src="@drawable/logo" />
 
             <TextView
-                android:layout_width="80dp"
+                android:layout_width="60dp"
                 android:layout_height="100dp" />
+            <Button
+                android:id="@+id/btnScore"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:onClick="clickScore"
+                android:text="Puan Ver"/>
 
         </TableRow>
     </TableLayout>
@@ -56,8 +62,6 @@
         android:layout_marginTop="15dp"
         android:background="@color/black"
         android:backgroundTint="@color/white"
-
-
         android:foreground="@android:drawable/editbox_dropdown_light_frame"
         android:onClick="clickNavigateProfileDetailPost"
         app:layout_constraintEnd_toEndOf="parent"
@@ -105,7 +109,7 @@
         android:id="@+id/txtHeaderPostDetailPost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="68dp"
         android:background="#96A7DA"
         android:padding="5dp"
         android:text="Bu bir Deneme Başlığıdır.96A7DA"
@@ -143,5 +147,21 @@ Java, Sun Microsystems'den James Gosling tarafından geliştirilen bir programla
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtHeaderPostDetailPost" />
+
+    <TextView
+        android:id="@+id/txtAverageScore_list_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="146dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="146dp"
+        android:layout_marginBottom="24dp"
+        android:text="Average Score: 0.0"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txtHeaderPostDetailPost"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnOpenProfileDetailPost" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,8 +6,8 @@ public class Article {
     private int articleId;
     private String articleTitle;
     private String articleContent;
-    private int numberSaves;
-    private String updated;
+    private int numberOfScores;
+    private String averageScore;
 
 
     public int getArticleId() {
@@ -33,24 +33,20 @@ public class Article {
         this.articleContent = articleContent;
     }
 
-    public int getNumberSaves() {
-        return numberSaves;
+    public int getNumberOfScores() {
+        return numberOfScores;
     }
 
-    //Sadece 1 arttırma ve 1 azaltmaya izin verildi
-    public void setNumberSaves(int number) {
-        if (number>0)
-            this.numberSaves = numberSaves+1;
-        else if(number<0)
-            this.numberSaves = numberSaves-1;
+    public void setNumberOfScores(int number) {
+            this.numberOfScores = number;
     }
 
-    public String getUpdated() {
-        return updated;
+    public String getAverageScore() {
+        return averageScore;
     }
 
-    public void setUpdated(String updated) {
-        this.updated = updated;
+    public void setAverageScore(String averageScore) {
+        this.averageScore = averageScore;
     }
 
 

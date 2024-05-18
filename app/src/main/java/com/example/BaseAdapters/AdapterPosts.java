@@ -49,7 +49,8 @@ public class AdapterPosts extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         convertView = inflater.inflate(R.layout.list_item_posts,null);
-        TextView txtHeaderPosts,txtContentPosts,txtPostId;
+        TextView txtHeaderPosts,txtContentPosts,txtPostId,txtAverageScore;
+
 
         txtHeaderPosts=convertView.findViewById(R.id.txtHeaderPosts_list_item);
         txtContentPosts=convertView.findViewById(R.id.txtContentPosts_list_item);

@@ -52,14 +52,20 @@ public class myProfilePage extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserSingleton user = UserSingleton.getInstance();
-                int articleId=articles.get(position).getArticleId();
+                String articleId=String.valueOf(articles.get(position).getArticleId());
                 Intent i = new Intent(myProfilePage.this, DetailPost.class);
-                i.putExtra("articleId",articleId);
+
                 i.putExtra("userPhoto", String.valueOf(user.getPhoto()));
                 i.putExtra("userName", user.getName() + " " + user.getSurName());
                 i.putExtra("userUniqueName", user.getUserName());
+
+
                 i.putExtra("postHeaderDetail", articles.get(position).getArticleTitle());
                 i.putExtra("postContentDetail", articles.get(position).getArticleContent());
+                i.putExtra("postAverageScore",articles.get(position).getAverageScore());
+                i.putExtra("postNumberOfScore",String.valueOf(articles.get(position).getNumberOfScores()));
+                i.putExtra("articleId",articleId);
+
                 startActivity(i);
             }
         });

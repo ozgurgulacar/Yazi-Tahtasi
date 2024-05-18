@@ -5,7 +5,7 @@ public class DataBaseConstants {
 
     //DataBase Oluşturmak için Gerekli Olanlar
     public static final String DATABASE_NAME = "MyDB";
-    public static final int DATABASE_VERSION = 5;
+    public static final int DATABASE_VERSION = 7;
 
 
 
@@ -31,22 +31,39 @@ public class DataBaseConstants {
 
 
 
+    //Oylar Tablosu için gerekli olanlar
+    public static final String Rating_Id="RatingId";
+    public static final String User_Name_Post="PostUserName";
+    public static final String User_Name_Rating="RatingUserName";
+    public static final String Score_Post="Score";
+    public static final String Post_Id="PostId";
+    public static final String CREATE_TABLE_Ratings =
+            "CREATE TABLE Ratings("
+                    +Rating_Id+" INTEGER PRIMARY KEY AUTOINCREMENT,"
+                    +Post_Id+" TEXT,"
+                    +User_Name_Post+" TEXT,"
+                    +User_Name_Rating+" TEXT,"
+                    +Score_Post+" TEXT"
+                    + ")";
+
+
+
 
 
     //Article Tablosu için gerekli olanlar
     public static final String Article_Id="ArticleId";
     public static final String Article_Title="ArticleTitle";
     public static final String Article_Content="ArticleContent";
-    public static final String Article_Number_Saves="NumberSaves";
-    public static final String Article_Is_Update="Updated";
+    public static final String Article_Number_Scores="NumberScores";
+    public static final String Article_Average_Scores="Average";
 
     public static final String CREATE_TABLE_Articles =
             "CREATE TABLE Articles("
                     +Article_Id+" INTEGER PRIMARY KEY AUTOINCREMENT,"
                     +Article_Title+" TEXT,"
                     +Article_Content+" TEXT,"
-                    +Article_Number_Saves+" INTEGER,"
-                    +Article_Is_Update+" INTEGER"
+                    +Article_Number_Scores+" INTEGER,"
+                    +Article_Average_Scores+" TEXT"
                     + ")";
 
 
