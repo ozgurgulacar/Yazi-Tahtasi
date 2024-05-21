@@ -188,6 +188,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+
     public void updateRating(Article article){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -496,4 +497,170 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         }
         return "Böyle biri yok";
     }
+
+    public ArrayList<String> getMyAllFollowsUserName(){
+        ArrayList<String> followsUserName= new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String returns[]= {DataBaseConstants.Followed_User_Name};
+        String query = DataBaseConstants.User_Name_Follower + "= ?";
+        String queryValue[] = {UserSingleton.getInstance().getUserName().toString()};
+
+        Cursor cursor = db.query("Follows",returns,query,queryValue,null,null,null);
+
+        if (cursor.moveToFirst()){
+            do {
+                followsUserName.add(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.Followed_User_Name)));
+            }while (cursor.moveToNext());
+        }
+        return followsUserName;
+    }
+
+    public ArrayList<String> getMyAllFollowsId(ArrayList<String> followsUserName){
+        ArrayList<String> followsId= new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String returns[]= {DataBaseConstants.User_Id};
+        String query = DataBaseConstants.User_Name_Unique + "= ?";
+        String queryValue[] = {followsUserName.get(0)};
+        for (int i = 0 ; i<followsUserName.size();i++){
+            queryValue[0] = followsUserName.get(i);
+            Cursor cursor= db.query("Users",returns,query,queryValue,null,null,null);
+            if (cursor.moveToFirst()){
+                cursor.moveToFirst();
+                followsId.add(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Id)));
+            }
+        }
+        return followsId;
+    }
+
+    public ArrayList<String> getArticlesId(ArrayList<String> followsId){
+        ArrayList<String> articlesId=new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+
+        StringBuilder inClause = new StringBuilder();
+        String[] queryValues = new String[followsId.size()];
+
+        for (int i = 0; i < followsId.size(); i++) {
+            queryValues[i] = followsId.get(i);
+            inClause.append("?");
+            if (i < followsId.size() - 1) {
+                inClause.append(",");
+            }
+        }
+
+        String query = DataBaseConstants.ArticleUser_user_id + " IN (" + inClause.toString() + ")";
+        String[] returns = {DataBaseConstants.ArticleUser_article_id, DataBaseConstants.ArticleUser_Date_Save};
+        String sortOrder = DataBaseConstants.ArticleUser_Date_Save + " DESC";
+
+        Cursor cursor = db.query(
+                "ArticleUser",   // The table to query
+                returns,                                    // The array of columns to return (pass null to get all)
+                query,                                      // The columns for the WHERE clause
+                queryValues,                                // The values for the WHERE clause
+                null,                                       // Don't group the rows
+                null,                                       // Don't filter by row groups
+                sortOrder                                   // The sort order
+        );
+
+        if (cursor != null) {
+            while (cursor.moveToNext()) {
+                articlesId.add(String.valueOf(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.ArticleUser_article_id))));
+
+            }
+            cursor.close();
+        }
+
+        return articlesId;
+
+
+    }
+
+    public ArrayList<Article> getAllArticle(ArrayList<String> articlesId){
+        ArrayList<Article> articles = new ArrayList<>();
+
+        SQLiteDatabase db= this.getReadableDatabase();
+
+        String returns[]= {DataBaseConstants.Article_Title,DataBaseConstants.Article_Content,DataBaseConstants.Article_Number_Scores,DataBaseConstants.Article_Average_Scores};
+        String query = DataBaseConstants.Article_Id + "= ?";
+        String queryValue[] = {articlesId.get(0)};
+        for (int i = 0 ; i<articlesId.size();i++){
+            queryValue[0] = articlesId.get(i);
+            Cursor cursor= db.query("Articles",returns,query,queryValue,null,null,null);
+            if (cursor.moveToFirst()){
+                cursor.moveToFirst();
+                Article a = new Article();
+                a.setArticleId(Integer.parseInt(articlesId.get(i)));
+                a.setArticleTitle(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.Article_Title)));
+                a.setArticleContent(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.Article_Content)));
+                a.setAverageScore(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.Article_Average_Scores)));
+                a.setNumberOfScores(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.Article_Number_Scores)));
+                articles.add(a);
+
+            }
+        }
+
+        return articles;
+    }
+
+    public int whoWriteThisPost(String Id){
+        int userId = -1;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = DataBaseConstants.ArticleUser_article_id+ "= ?";
+        String queryValue[] = {String.valueOf(Id)};
+        String returns[] = {DataBaseConstants.ArticleUser_user_id};
+
+        Cursor cursor = db.query("ArticleUser",returns,query,queryValue,null,null,null);
+
+        if (cursor.moveToFirst()){
+            cursor.moveToFirst();
+            userId=cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.ArticleUser_user_id));
+        }
+        return userId;
+    }
+
+    public User getUserWithId(int userId){
+        User user = new User();
+
+        try {
+            SQLiteDatabase db = this.getReadableDatabase();
+            String query = DataBaseConstants.User_Id+ "= ?";
+            String queryValue[] = {String.valueOf(userId)};
+            String returns[] = {DataBaseConstants.User_Name_Unique,DataBaseConstants.User_Name,DataBaseConstants.User_SurName,
+                    DataBaseConstants.User_Photo_Uri,DataBaseConstants.User_Number_Who_Follow_Me,DataBaseConstants.User_Number_I_Follow};
+            Cursor cursor = db.query("Users",returns,query,queryValue,null,null,null);
+            if (cursor.moveToFirst()){
+                cursor.moveToFirst();
+                user.setName(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Name)));
+
+                user.setSurName(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_SurName)));
+
+                user.setUserId(userId);
+
+                String uri = (cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Photo_Uri)));
+                user.setPhoto(Uri.parse(uri));
+
+                user.setUserName(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Name_Unique)));
+
+                user.setNumberIFollow(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Number_I_Follow)));
+
+                user.setNumberWhoFollowMe(cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Number_Who_Follow_Me)));
+
+            }
+
+        }catch (Exception e){
+            user.setName("HataKodu=1024!");
+        }
+
+
+        return user;
+    }
+
+
 }

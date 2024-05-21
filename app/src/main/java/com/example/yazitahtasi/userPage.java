@@ -152,7 +152,6 @@ public class userPage extends AppCompatActivity {
 
     private void getPostsUser() {
         articles = db.getUserPosts(userId);
-        Log.d("TAGAMK", "getPostsUser: " +articles.get(0).getAverageScore());
         if (!articles.get(0).getArticleTitle().equals("KAYIT BULUNAMADI")) {
             AdapterPosts adapterPosts = new AdapterPosts(getApplicationContext(), articles);
             listView.setAdapter(adapterPosts);

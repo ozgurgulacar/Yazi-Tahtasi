@@ -55,6 +55,7 @@ public class postPage extends AppCompatActivity {
     public void clickCancelOrDeletePost(View v){
         finish();
     }
+
     public void clickShareOrUpdatePost(View v) {
         //Başlık Ve İçerik Boş Değilse
         if (!txtContent.getText().toString().isEmpty() && !txtTitle.getText().toString().isEmpty()) {
@@ -86,6 +87,7 @@ public class postPage extends AppCompatActivity {
         }
         //Başlık Ve İçerik Boş İse
         else {
+            Toast.makeText(postPage.this,"Lütfen Alanları Doldurunuz",Toast.LENGTH_SHORT).show();
 
         }
     }

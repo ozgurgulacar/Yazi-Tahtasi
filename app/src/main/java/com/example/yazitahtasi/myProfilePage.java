@@ -93,7 +93,6 @@ public class myProfilePage extends AppCompatActivity {
         });
     }
 
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
@@ -138,6 +137,7 @@ public class myProfilePage extends AppCompatActivity {
     public void clickSearchWordMyProfilePage(View v){
 
     }
+
     public void clickExitMyProfilePage(View v){
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Emin Misiniz");
@@ -159,6 +159,7 @@ public class myProfilePage extends AppCompatActivity {
         });
         alert.create().show();
     }
+
     public void clickEditProfileMyProfilePage(View v){
 
     }
@@ -174,7 +175,6 @@ public class myProfilePage extends AppCompatActivity {
 
 
     }
-
 
     public void myPosts(){
         try {

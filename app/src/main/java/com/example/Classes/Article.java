@@ -10,6 +10,10 @@ public class Article {
     private String averageScore;
 
 
+
+
+
+
     public int getArticleId() {
         return articleId;
     }

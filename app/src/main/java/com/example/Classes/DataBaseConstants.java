@@ -16,8 +16,8 @@ public class DataBaseConstants {
 
     //Takip Tablosu için gerekli olanlar
     public static final String Follows_Id="FollowsId";
-    public static final String User_Name_Follower="UserName";
-    public static final String Followed_User_Name="FollowedUserId";
+    public static final String User_Name_Follower="UserName";//Takip Eden
+    public static final String Followed_User_Name="FollowedUserId"; //Takip Edilen
 
     public static final String CREATE_TABLE_Follows =
             "CREATE TABLE Follows("
