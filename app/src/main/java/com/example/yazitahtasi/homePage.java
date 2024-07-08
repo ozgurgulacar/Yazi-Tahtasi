@@ -78,11 +78,6 @@ public class homePage extends AppCompatActivity {
         finish();
     }
 
-    public void clickSearchWordHome(View v) {
-        Intent i = new Intent(homePage.this, webView.class);
-        startActivity(i);
-    }
-
     public void clickExitHomePage(View v) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Emin Misiniz");

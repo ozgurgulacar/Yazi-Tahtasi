@@ -39,18 +39,21 @@
             <ImageView
                 android:layout_width="80dp"
                 android:layout_height="100dp"
+                android:layout_marginLeft="5dp"
                 android:src="@drawable/logo" />
 
             <TextView
                 android:layout_width="60dp"
                 android:layout_height="100dp" />
-            <Button
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnScore"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
                 android:onClick="clickScore"
-                android:text="Puan Ver"/>
-
+                android:src="@drawable/rate2" />
         </TableRow>
     </TableLayout>
 

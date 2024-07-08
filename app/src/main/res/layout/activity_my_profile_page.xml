@@ -45,7 +45,7 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="15dp"
                 android:onClick="clickExitMyProfilePage"
-                android:src="@drawable/baseline_add_circle_24"
+                android:src="@drawable/exit"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </TableRow>
@@ -59,7 +59,6 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="21dp"
         android:layout_marginBottom="9dp"
-        android:onClick="clickAddImageRegister"
         android:src="@drawable/add_photo"
         app:c_border="true"
         app:c_border_color="@color/black"
@@ -138,6 +137,7 @@
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:background="#8E74FD"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -149,25 +149,13 @@
                 android:layout_width="80dp"
                 android:layout_height="58dp"
 
-                android:layout_marginStart="15dp"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="10dp"
                 android:onClick="clickHomePageMyProfilePage"
                 android:src="@drawable/logo"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView android:layout_width="30dp" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnSearchWordMyProfilePage"
-                android:layout_width="80dp"
-                android:layout_height="58dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:onClick="clickSearchWordMyProfilePage"
-                android:src="@drawable/baseline_add_home_24"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView android:layout_width="30dp" />
 
@@ -175,10 +163,11 @@
                 android:id="@+id/btnSearchUserMyProfilePage"
                 android:layout_width="80dp"
                 android:layout_height="58dp"
-                android:layout_marginStart="15dp"
+
+                android:layout_marginLeft="60dp"
                 android:layout_marginTop="10dp"
                 android:onClick="clickSearchUserMyProfilePage"
-                android:src="@drawable/baseline_add_circle_24"
+                android:src="@drawable/searchuser"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -188,9 +177,11 @@
                 android:id="@+id/btnProfile"
                 android:layout_width="80dp"
                 android:layout_height="58dp"
-                android:layout_marginStart="15dp"
+
+                android:layout_marginLeft="50dp"
                 android:layout_marginTop="10dp"
                 android:clickable="false"
+
                 android:src="@drawable/baseline_account_circle_24"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
