@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +19,7 @@ import android.widget.TextView;
 
 import com.example.BaseAdapters.AdapterPosts;
 import com.example.Classes.Article;
-import com.example.Classes.DataBaseHelper;
+import com.example.Databases.DataBaseHelper;
 import com.example.Classes.User;
 import com.example.Classes.UserSingleton;
 

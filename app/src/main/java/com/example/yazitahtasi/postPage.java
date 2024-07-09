@@ -10,11 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.Classes.Article;
-import com.example.Classes.DataBaseHelper;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import com.example.Databases.DataBaseHelper;
 
 public class postPage extends AppCompatActivity {
     Button btnCancel, btnShare;

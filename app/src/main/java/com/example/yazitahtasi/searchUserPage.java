@@ -12,11 +12,10 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.BaseAdapters.AdapterSearchUser;
-import com.example.Classes.DataBaseConstants;
-import com.example.Classes.DataBaseHelper;
+import com.example.Databases.DataBaseConstants;
+import com.example.Databases.DataBaseHelper;
 import com.example.Classes.User;
 import com.example.Classes.UserSingleton;
 

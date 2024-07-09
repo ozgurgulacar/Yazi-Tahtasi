@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.Classes.Article;
-import com.example.Classes.DataBaseHelper;
+import com.example.Databases.DataBaseHelper;
 import com.example.yazitahtasi.R;
 
 import java.util.List;

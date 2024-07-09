@@ -2,10 +2,12 @@ package com.example.yazitahtasi;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -14,13 +16,13 @@ import android.widget.Toast;
 
 import com.example.BaseAdapters.AdapterPosts;
 import com.example.Classes.Article;
-import com.example.Classes.DataBaseHelper;
+import com.example.Databases.DataBaseHelper;
 import com.example.Classes.User;
 import com.example.Classes.UserSingleton;
 
 import java.util.ArrayList;
 
-public class homePage extends AppCompatActivity {
+public class homePage extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     ListView liste;
     DataBaseHelper db;
@@ -28,14 +30,18 @@ public class homePage extends AppCompatActivity {
     ArrayList<String> followUserNames = new ArrayList<>();
     ArrayList<String> articleIds = new ArrayList<>();
     ArrayList<Article> articles = new ArrayList<>();
-
+    SwipeRefreshLayout sRL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_page);
         db = new DataBaseHelper(this);
-        liste = findViewById(R.id.listViewHomePage);
+        liste = findViewById(R.id.list);
+        sRL=findViewById(R.id.swipeReflesh);
+
+
+        sRL.setOnRefreshListener(this);
         liste.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -148,7 +154,15 @@ public class homePage extends AppCompatActivity {
         }
     }
 
-    public void clickGetArticlesHomePage(View view) {
+    @Override
+    public void onRefresh() {
         fillListView();
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                sRL.setRefreshing(false);
+            }
+        },1000);
     }
 }

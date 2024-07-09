@@ -4,15 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.Classes.DataBaseHelper;
-import com.example.Classes.UserSingleton;
+import com.example.Databases.DataBaseHelper;
 
 public class loginPage extends AppCompatActivity {
     private EditText userName,password;
@@ -21,7 +18,6 @@ public class loginPage extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
-
         userName=findViewById(R.id.editUserName);
         password=findViewById(R.id.editPassword);
 
@@ -36,8 +32,6 @@ public class loginPage extends AppCompatActivity {
             //Başarılı ise homePageye yönlendirildi
             String deneme=db.isLoginSuccesful(userName.getText().toString(), password.getText().toString());
             if (deneme.equals("true")) {
-                UserSingleton user = UserSingleton.getInstance();
-                Log.d("girisyaparken","IFollow "+user.getNumberIFollow()+" WhoFollow "+ user.getNumberWhoFollowMe());
                 Intent i = new Intent(loginPage.this, homePage.class);
                 startActivity(i);
                 finish();
@@ -71,4 +65,4 @@ public class loginPage extends AppCompatActivity {
         startActivity(i);
 
     }
-}
+} 

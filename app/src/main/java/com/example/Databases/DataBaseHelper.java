@@ -1,4 +1,4 @@
-package com.example.Classes;
+package com.example.Databases;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,6 +9,10 @@ import android.net.Uri;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+
+import com.example.Classes.Article;
+import com.example.Classes.User;
+import com.example.Classes.UserSingleton;
 
 import java.util.ArrayList;
 import java.util.List;

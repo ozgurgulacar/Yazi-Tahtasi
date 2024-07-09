@@ -1,4 +1,4 @@
-package com.example.Classes;
+package com.example.Databases;
 
 public class DataBaseConstants {
 
