@@ -4,8 +4,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -31,6 +33,7 @@ public class homePage extends AppCompatActivity implements SwipeRefreshLayout.On
     ArrayList<String> articleIds = new ArrayList<>();
     ArrayList<Article> articles = new ArrayList<>();
     SwipeRefreshLayout sRL;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,8 @@ public class homePage extends AppCompatActivity implements SwipeRefreshLayout.On
         db = new DataBaseHelper(this);
         liste = findViewById(R.id.list);
         sRL=findViewById(R.id.swipeReflesh);
+
+        sharedPreferences=this.getSharedPreferences("com.example.yazitahtasi.SHARED_PREFERENCES", Context.MODE_PRIVATE);
 
 
         sRL.setOnRefreshListener(this);
@@ -92,6 +97,9 @@ public class homePage extends AppCompatActivity implements SwipeRefreshLayout.On
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent i = new Intent(homePage.this, loginPage.class);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("isActive", false);
+                editor.apply();
                 startActivity(i);
                 finish();
             }

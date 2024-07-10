@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -32,8 +34,8 @@ public class myProfilePage extends AppCompatActivity {
     int which;
     ListView listView;
     ImageView img;
-    TextView txtWhoFollowCount,txtIFollowCount,txtPostsCount,txtname,txtusername;
-
+    TextView txtWhoFollowCount, txtIFollowCount, txtPostsCount, txtname, txtusername;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onRestart() {
@@ -50,22 +52,26 @@ public class myProfilePage extends AppCompatActivity {
         db = new DataBaseHelper(this);
         listView = findViewById(R.id.listViewMyProfilePage);
         img = findViewById(R.id.btnPhotoMyProfil);
-        txtWhoFollowCount=findViewById(R.id.txtWhoFollowCount);
-        txtIFollowCount=findViewById(R.id.txtIFollowCount);
-        txtPostsCount=findViewById(R.id.txtPostCount);
-        txtname=findViewById(R.id.txtMyNameMyProfile);
-        txtusername=findViewById(R.id.txtMyUserNameMyProfile);
+        txtWhoFollowCount = findViewById(R.id.txtWhoFollowCount);
+        txtIFollowCount = findViewById(R.id.txtIFollowCount);
+        txtPostsCount = findViewById(R.id.txtPostCount);
+        txtname = findViewById(R.id.txtMyNameMyProfile);
+        txtusername = findViewById(R.id.txtMyUserNameMyProfile);
 
         myPosts();
         myphoto();
         myInformation();
+
+
+        sharedPreferences = this.getSharedPreferences("com.example.yazitahtasi.SHARED_PREFERENCES", Context.MODE_PRIVATE);
+
 
         registerForContextMenu(listView);
 
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                which=position;
+                which = position;
                 return false;
             }
         });
@@ -73,7 +79,7 @@ public class myProfilePage extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserSingleton user = UserSingleton.getInstance();
-                String articleId=String.valueOf(articles.get(position).getArticleId());
+                String articleId = String.valueOf(articles.get(position).getArticleId());
                 Intent i = new Intent(myProfilePage.this, DetailPost.class);
 
                 i.putExtra("userPhoto", String.valueOf(user.getPhoto()));
@@ -83,9 +89,9 @@ public class myProfilePage extends AppCompatActivity {
 
                 i.putExtra("postHeaderDetail", articles.get(position).getArticleTitle());
                 i.putExtra("postContentDetail", articles.get(position).getArticleContent());
-                i.putExtra("postAverageScore",articles.get(position).getAverageScore());
-                i.putExtra("postNumberOfScore",String.valueOf(articles.get(position).getNumberOfScores()));
-                i.putExtra("articleId",articleId);
+                i.putExtra("postAverageScore", articles.get(position).getAverageScore());
+                i.putExtra("postNumberOfScore", String.valueOf(articles.get(position).getNumberOfScores()));
+                i.putExtra("articleId", articleId);
 
                 startActivity(i);
             }
@@ -96,48 +102,48 @@ public class myProfilePage extends AppCompatActivity {
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater inf = getMenuInflater();
-        inf.inflate(R.menu.menumyprofile,menu);
+        inf.inflate(R.menu.menumyprofile, menu);
 
         menu.setHeaderTitle("İşleminizi Seçin");
     }
 
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==R.id.itemDelete){
+        if (item.getItemId() == R.id.itemDelete) {
             db.deleteArticle(String.valueOf(articles.get(which).getArticleId()));
             myPosts();
 
-        } else if (item.getItemId()==R.id.itemEdit) {
-            Intent i = new Intent(myProfilePage.this,postPage.class);
-            i.putExtra("Title",articles.get(which).getArticleTitle());
-            i.putExtra("Content",articles.get(which).getArticleContent());
-            i.putExtra("Id",String.valueOf(articles.get(which).getArticleId()));
-            i.putExtra("referrer","DetailsMyPosts");
+        } else if (item.getItemId() == R.id.itemEdit) {
+            Intent i = new Intent(myProfilePage.this, postPage.class);
+            i.putExtra("Title", articles.get(which).getArticleTitle());
+            i.putExtra("Content", articles.get(which).getArticleContent());
+            i.putExtra("Id", String.valueOf(articles.get(which).getArticleId()));
+            i.putExtra("referrer", "DetailsMyPosts");
             startActivity(i);
-        }else{
+        } else {
             return false;
         }
         return true;
     }
 
-    public void clickHomePageMyProfilePage(View v){
-        Intent i =new Intent(myProfilePage.this,homePage.class);
+    public void clickHomePageMyProfilePage(View v) {
+        Intent i = new Intent(myProfilePage.this, homePage.class);
         startActivity(i);
         finish();
 
     }
 
-    public void clickSearchUserMyProfilePage(View v){
-        Intent i =new Intent(myProfilePage.this,searchUserPage.class);
+    public void clickSearchUserMyProfilePage(View v) {
+        Intent i = new Intent(myProfilePage.this, searchUserPage.class);
         startActivity(i);
         finish();
     }
 
-    public void clickSearchWordMyProfilePage(View v){
+    public void clickSearchWordMyProfilePage(View v) {
 
     }
 
-    public void clickExitMyProfilePage(View v){
+    public void clickExitMyProfilePage(View v) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Emin Misiniz");
         alert.setMessage("Çıkış yapmak istediğinize Emin misiniz?");
@@ -145,6 +151,9 @@ public class myProfilePage extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent i = new Intent(myProfilePage.this, loginPage.class);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("isActive", false);
+                editor.apply();
                 startActivity(i);
                 finish();
             }
@@ -159,41 +168,40 @@ public class myProfilePage extends AppCompatActivity {
         alert.create().show();
     }
 
-    public void clickEditProfileMyProfilePage(View v){
+    public void clickEditProfileMyProfilePage(View v) {
 
     }
 
-    public void myInformation(){
-        UserSingleton user= UserSingleton.getInstance();
-        User user2=db.getUser(user.getUserName());
+    public void myInformation() {
+        UserSingleton user = UserSingleton.getInstance();
+        User user2 = db.getUser(user.getUserName());
         user.setNumberWhoFollowMe(user2.getNumberWhoFollowMe());
         txtusername.setText(user.getUserName());
-        txtname.setText(user.getName()+" "+user.getSurName());
+        txtname.setText(user.getName() + " " + user.getSurName());
         txtIFollowCount.setText(String.valueOf(user.getNumberIFollow()));
         txtWhoFollowCount.setText(String.valueOf(user.getNumberWhoFollowMe()));
 
 
     }
 
-    public void myPosts(){
+    public void myPosts() {
         try {
             articles = db.getMyPosts();
-            if (!articles.get(0).getArticleTitle().equals("KAYIT BULUNAMADI")){
-                AdapterPosts adapterPosts = new AdapterPosts(getApplicationContext(),articles);
+            if (!articles.get(0).getArticleTitle().equals("KAYIT BULUNAMADI")) {
+                AdapterPosts adapterPosts = new AdapterPosts(getApplicationContext(), articles);
                 listView.setAdapter(adapterPosts);
                 txtPostsCount.setText(String.valueOf(articles.size()));
-            }
-            else{
+            } else {
                 txtPostsCount.setText("0");
             }
 
-        }catch (Exception e){
-            Log.d("HataGetArticlesProfil",e.toString());
-            Log.d("HataaGetArticlesProfil",e.getMessage());
+        } catch (Exception e) {
+            Log.d("HataGetArticlesProfil", e.toString());
+            Log.d("HataaGetArticlesProfil", e.getMessage());
         }
     }
 
-    public void myphoto(){
+    public void myphoto() {
         img.setImageURI(UserSingleton.getInstance().getPhoto());
     }
 }

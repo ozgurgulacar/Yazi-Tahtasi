@@ -3,8 +3,10 @@ package com.example.yazitahtasi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +28,7 @@ public class searchUserPage extends AppCompatActivity {
     DataBaseHelper db;
     EditText txt;
     ListView listView;
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +37,7 @@ public class searchUserPage extends AppCompatActivity {
         db= new DataBaseHelper(this);
         txt=findViewById(R.id.txtSearchPeople);
         listView=findViewById(R.id.listViewSearchUser);
-
+        sharedPreferences=this.getSharedPreferences("com.example.yazitahtasi.SHARED_PREFERENCES", Context.MODE_PRIVATE);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -100,6 +103,9 @@ public class searchUserPage extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Intent i = new Intent(searchUserPage.this, loginPage.class);
+                SharedPreferences.Editor editor= sharedPreferences.edit();
+                editor.putBoolean("isActive",false);
+                editor.apply();
                 startActivity(i);
                 finish();
             }
