@@ -1,13 +1,16 @@
 package com.example.yazitahtasi;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -18,12 +21,14 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.BaseAdapters.AdapterPosts;
 import com.example.Classes.Article;
 import com.example.Databases.DataBaseHelper;
 import com.example.Classes.User;
 import com.example.Classes.UserSingleton;
+import com.github.dhaval2404.imagepicker.ImagePicker;
 
 import java.util.List;
 
@@ -57,6 +62,15 @@ public class myProfilePage extends AppCompatActivity {
         txtPostsCount = findViewById(R.id.txtPostCount);
         txtname = findViewById(R.id.txtMyNameMyProfile);
         txtusername = findViewById(R.id.txtMyUserNameMyProfile);
+
+        txtWhoFollowCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(myProfilePage.this,"TIKLANDI",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         myPosts();
         myphoto();
@@ -139,10 +153,6 @@ public class myProfilePage extends AppCompatActivity {
         finish();
     }
 
-    public void clickSearchWordMyProfilePage(View v) {
-
-    }
-
     public void clickExitMyProfilePage(View v) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle("Emin Misiniz");
@@ -169,8 +179,26 @@ public class myProfilePage extends AppCompatActivity {
     }
 
     public void clickEditProfileMyProfilePage(View v) {
-
+        Intent i = new Intent(this, UserUpdate.class);
+        startActivity(i);
+        finish();
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            Uri uri = data.getData();
+            img.setImageURI(uri);
+            UserSingleton.getInstance().setPhoto((uri));
+            db.updateUser();
+        }
+        else{
+            Toast.makeText(this,"Fotoğraf Seçilmedi",Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
 
     public void myInformation() {
         UserSingleton user = UserSingleton.getInstance();
@@ -180,8 +208,6 @@ public class myProfilePage extends AppCompatActivity {
         txtname.setText(user.getName() + " " + user.getSurName());
         txtIFollowCount.setText(String.valueOf(user.getNumberIFollow()));
         txtWhoFollowCount.setText(String.valueOf(user.getNumberWhoFollowMe()));
-
-
     }
 
     public void myPosts() {
@@ -203,5 +229,13 @@ public class myProfilePage extends AppCompatActivity {
 
     public void myphoto() {
         img.setImageURI(UserSingleton.getInstance().getPhoto());
+    }
+
+    public void clickUpdatePhoto(View view) {
+        ImagePicker.with(this)
+                .crop()	    			//Crop image(Optional), Check Customization for more option
+                .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                .start();
     }
 }

@@ -16,7 +16,9 @@
         android:theme="@style/Theme.YaziTahtasi"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".UserUpdate"
+            android:exported="false" />
         <activity
             android:name=".webView"
             android:exported="true">
@@ -26,8 +28,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".DetailPost"
             android:exported="true">
@@ -37,7 +37,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".userPage"
             android:exported="true">
@@ -47,7 +46,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".postPage"
             android:exported="true"
@@ -59,7 +57,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".searchUserPage"
             android:exported="true"
@@ -70,7 +67,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".myProfilePage"
             android:exported="true">
@@ -80,7 +76,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".homePage"
             android:exported="true">
@@ -90,7 +85,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".registerPage2"
             android:exported="true">
@@ -100,7 +94,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".registerPage"
             android:exported="true">
@@ -110,7 +103,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".loginPage"
             android:exported="true">
@@ -120,7 +112,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -130,7 +121,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>

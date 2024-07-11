@@ -219,6 +219,28 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         int rowsUpdated = db.update("Articles",values,whereClause,whereArgs);
     }
 
+    public void updateUser(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        UserSingleton userSingleton = UserSingleton.getInstance();
+
+        values.put(DataBaseConstants.User_Email,userSingleton.getEmail());
+        values.put(DataBaseConstants.User_Name,userSingleton.getName());
+        values.put(DataBaseConstants.User_SurName,userSingleton.getSurName());
+        values.put(DataBaseConstants.User_Password,userSingleton.getPassword());
+        values.put(DataBaseConstants.User_Phone_Number,userSingleton.getNumber());
+        values.put(DataBaseConstants.User_Photo_Uri,userSingleton.getPhoto().toString());
+
+
+
+        String whereClause = DataBaseConstants.User_Id +" = ?"; //
+        String[] whereArgs = {String.valueOf(userSingleton.getUserId())}; //
+
+        int rowsUpdated = db.update("Users",values,whereClause,whereArgs);
+
+    }
+
     public void deleteArticle(String Id){
         SQLiteDatabase db = this.getWritableDatabase();
 
