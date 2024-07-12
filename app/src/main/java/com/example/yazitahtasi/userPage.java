@@ -84,12 +84,44 @@ public class userPage extends AppCompatActivity {
             }
         });
 
+
+
+        txtIFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                detayTakip("takipEttikleri",txtIFollow.getText().toString());
+            }
+        });
+
+
+        txtWhoFollow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                detayTakip("takipcileri",txtWhoFollow.getText().toString());
+            }
+        });
+
         userInformation();
         getPostsUser();
 
 
     }
 
+
+    private void detayTakip(String which,String count){
+        try {
+            Intent intent = new Intent(userPage.this, takiplistesi.class);
+            intent.putExtra("which",which);
+            intent.putExtra("count",count);
+            intent.putExtra("who",user.getUserName());
+
+            startActivity(intent);
+            Log.d("detayTakip", "which: " + which + ", count: " + count + ", who: " + user.getUserName());
+        }catch (Exception e){
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
     public void clickBackUserPage(View v) {
         finish();

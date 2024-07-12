@@ -127,7 +127,7 @@ public class homePage extends AppCompatActivity implements SwipeRefreshLayout.On
 
         try {
 
-            followUserNames = db.getMyAllFollowsUserName();
+            followUserNames = db.getAllTakipEttikleri(UserSingleton.getInstance().getUserName());
 
             if (followUserNames.isEmpty())
                 return;

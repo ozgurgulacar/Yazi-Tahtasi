@@ -45,6 +45,8 @@ public class myProfilePage extends AppCompatActivity {
     @Override
     protected void onRestart() {
         myPosts();
+        myphoto();
+        myInformation();
         super.onRestart();
 
     }
@@ -66,10 +68,16 @@ public class myProfilePage extends AppCompatActivity {
         txtWhoFollowCount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(myProfilePage.this,"TIKLANDI",Toast.LENGTH_SHORT).show();
+                detayTakip("takipcileri",txtWhoFollowCount.getText().toString());
             }
         });
 
+        txtIFollowCount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                detayTakip("takipEttikleri",txtIFollowCount.getText().toString());
+            }
+        });
 
 
         myPosts();
@@ -110,6 +118,16 @@ public class myProfilePage extends AppCompatActivity {
                 startActivity(i);
             }
         });
+    }
+
+
+
+    private void detayTakip(String which, String count){
+        Intent intent = new Intent(this, takiplistesi.class);
+        intent.putExtra("which",which);
+        intent.putExtra("count",count);
+        intent.putExtra("who",UserSingleton.getInstance().getUserName());
+        startActivity(intent);
     }
 
     @Override

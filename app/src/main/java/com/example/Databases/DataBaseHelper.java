@@ -524,14 +524,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return "Böyle biri yok";
     }
 
-    public ArrayList<String> getMyAllFollowsUserName(){
+    public ArrayList<String> getAllTakipEttikleri(String userNameUnique){
         ArrayList<String> followsUserName= new ArrayList<>();
 
         SQLiteDatabase db = getReadableDatabase();
 
         String returns[]= {DataBaseConstants.Followed_User_Name};
         String query = DataBaseConstants.User_Name_Follower + "= ?";
-        String queryValue[] = {UserSingleton.getInstance().getUserName().toString()};
+        String queryValue[] = {userNameUnique};
 
         Cursor cursor = db.query("Follows",returns,query,queryValue,null,null,null);
 
@@ -541,6 +541,54 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             }while (cursor.moveToNext());
         }
         return followsUserName;
+    }
+
+
+    public ArrayList<String> getAllTakipcileri(String userNameUnique){
+        ArrayList<String> followsUserName= new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String returns[]= {DataBaseConstants.User_Name_Follower};
+        String query = DataBaseConstants.Followed_User_Name + "= ?";
+        String queryValue[] = {userNameUnique};
+
+        Cursor cursor = db.query("Follows",returns,query,queryValue,null,null,null);
+
+        if (cursor.moveToFirst()){
+            do {
+                followsUserName.add(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Name_Follower)));
+            }while (cursor.moveToNext());
+        }
+        return followsUserName;
+    }
+
+
+    public ArrayList<User> getFullNameFollows(ArrayList<String> followsUserName){
+        ArrayList<User> kullanicilar= new ArrayList<>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        String returns[]= {DataBaseConstants.User_Name,DataBaseConstants.User_SurName,DataBaseConstants.User_Photo_Uri};
+        String query = DataBaseConstants.User_Name_Unique + "= ?";
+        String queryValue[] = {followsUserName.get(0)};
+        for (int i = 0 ; i<followsUserName.size();i++){
+            queryValue[0] = followsUserName.get(i);
+            Cursor cursor= db.query("Users",returns,query,queryValue,null,null,null);
+            if (cursor.moveToFirst()){
+                cursor.moveToFirst();
+                String ad=(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Name)));
+                String soyad=(cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_SurName)));
+                String uri = (cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.User_Photo_Uri)));
+                User user = new User();
+                user.setPhoto(Uri.parse(uri));
+                user.setName(ad);
+                user.setSurName(soyad);
+                user.setUserName(followsUserName.get(i));
+                kullanicilar.add(user);
+            }
+        }
+        return kullanicilar;
     }
 
     public ArrayList<String> getMyAllFollowsId(ArrayList<String> followsUserName){

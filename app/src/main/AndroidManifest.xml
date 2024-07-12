@@ -17,17 +17,11 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".UserUpdate"
+            android:name=".takiplistesi"
             android:exported="false" />
         <activity
-            android:name=".webView"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.activity_web_view" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:name=".UserUpdate"
+            android:exported="false" />
         <activity
             android:name=".DetailPost"
             android:exported="true">
